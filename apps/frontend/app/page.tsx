@@ -1,46 +1,25 @@
-import { Button } from "@repo/ui/components/ui/button";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@repo/ui/components/ui/avatar";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@repo/ui/components/ui/card";
-import { Badge } from "@repo/ui/components/ui/badge";
+import { currentUser } from "@clerk/nextjs/server";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import ShopSelection from "../components/shop-selection/shop-selection";
 
-export default function Page() {
+export default async function Home() {
+  const current = await currentUser();
+  const selectedShopId = cookies().get("selectedShopId");
+  if (!current) {
+    if (selectedShopId) {
+      cookies().delete("selectedShopId");
+    }
+    return redirect("/sign-in");
+  }
+
+  if (selectedShopId) {
+    return redirect(`/dashboard`);
+  }
+
   return (
-    <main>
-      <div className="">
-        <Button>Click me</Button>
-        <Button>Click me hehe</Button>
-
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-
-        <Badge>Badge</Badge>
-      </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Card Title</CardTitle>
-          <CardDescription>Card Description</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
-        </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
-      </Card>
-    </main>
+    <>
+      <ShopSelection />
+    </>
   );
 }
