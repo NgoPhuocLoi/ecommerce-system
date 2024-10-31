@@ -11,6 +11,7 @@ import {
 } from "@repo/ui/components/ui/card";
 import { Button } from "@repo/ui/components/ui/button";
 import { Separator } from "@repo/ui/components/ui/separator";
+import { getShops } from "../../actions/shops";
 
 export interface Shop {
   id: string;
@@ -23,8 +24,8 @@ const ShopSelection = async () => {
   if (!token) {
     return null;
   }
-  //   const shops: Shop[] = (await getShops(token)).metadata || [];
-  const shops: any[] = [];
+  const shops: Shop[] = (await getShops(token)) || [];
+  console.log({ shops });
   return (
     <div className="flex h-screen w-screen items-center justify-center py-20">
       <Card className="h-full w-[476px]">
