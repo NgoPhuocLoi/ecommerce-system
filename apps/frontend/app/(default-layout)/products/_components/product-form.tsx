@@ -9,10 +9,10 @@ import ProductStatus from "./product-status";
 import ProductStock from "./product-stock";
 import { VariantOption } from "./product-variant-list";
 import ProductVariants from "./product-variants";
-import { createProduct } from "app/actions/product";
+import { createProduct } from "@repo/common/actions/product";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { Product } from "app/interfaces/product";
+import { Product } from "@repo/common/interfaces/product";
 import Link from "next/link";
 
 interface IProductFormProps {

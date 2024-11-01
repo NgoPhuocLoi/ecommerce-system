@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@repo/ui/components/ui/card";
 
-import { PreviewUploadedContent } from "app/interfaces/uploaded-content";
+import { PreviewUploadedContent } from "@repo/common/interfaces/uploaded-content";
 import { cookies } from "next/headers";
 import ProductImageList from "./product-image-list";
 

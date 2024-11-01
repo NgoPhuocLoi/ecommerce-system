@@ -1,0 +1,13 @@
+{
+  "name": "@repo/common",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./interfaces/*": "./interfaces/*.ts",
+    "./actions/*": "./actions/*.ts",
+    "./utils/*": "./utils/*.ts",
+    "./atoms/*": "./atoms/*.ts",
+    "./hooks/*": "./hooks/*.ts",
+    "./icons/*": "./icons/index.ts"
+  }
+}

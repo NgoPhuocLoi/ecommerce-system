@@ -1,5 +1,5 @@
 "use client";
-import { PreviewUploadedContent } from "app/interfaces/uploaded-content";
+import { PreviewUploadedContent } from "@repo/common/interfaces/uploaded-content";
 import { DataTableColumnHeader } from "@repo/ui/components/ui/data-table/column-header";
 import { ColumnDef } from "@tanstack/react-table";
 import { Link2 } from "lucide-react";

@@ -1,8 +1,9 @@
 "use client";
-import { PreviewUploadedContent } from "app/interfaces/uploaded-content";
+import { PreviewUploadedContent } from "@repo/common/interfaces/uploaded-content";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import UploadButton from "./upload-btn";
+// import UploadButton from "./upload-btn";
+import UploadButton from "@repo/ui/components/upload-btn";
 
 interface IProductImageListProps {
   shopId: string;

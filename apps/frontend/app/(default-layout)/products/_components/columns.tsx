@@ -1,5 +1,5 @@
 "use client";
-import { Product } from "app/interfaces/product";
+import { Product } from "@repo/common/interfaces/product";
 import { Badge } from "@repo/ui/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
 import clsx from "clsx";

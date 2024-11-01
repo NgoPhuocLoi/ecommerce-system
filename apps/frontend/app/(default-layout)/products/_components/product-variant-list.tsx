@@ -1,6 +1,6 @@
 "use client";
-import { Attribute } from "app/interfaces/category";
-import { VariantResponse } from "app/interfaces/product";
+import { Attribute } from "@repo/common/interfaces/category";
+import { VariantResponse } from "@repo/common/interfaces/product";
 import { selectedCategoryAtom } from "app/atoms/category-atom";
 import { Badge } from "@repo/ui/components/ui/badge";
 import { Button } from "@repo/ui/components/ui/button";

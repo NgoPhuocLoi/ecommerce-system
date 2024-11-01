@@ -1,5 +1,5 @@
-import { Attribute } from "app/interfaces/category";
-import { VariantResponse } from "app/interfaces/product";
+import { Attribute } from "@repo/common/interfaces/category";
+import { VariantResponse } from "@repo/common/interfaces/product";
 import {
   Card,
   CardContent,

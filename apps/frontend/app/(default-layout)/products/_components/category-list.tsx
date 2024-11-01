@@ -9,9 +9,9 @@ import {
   SelectValue,
 } from "@repo/ui/components/ui/select";
 import { Separator } from "@repo/ui/components/ui/separator";
-import { getSubCategories } from "app/actions/categories";
+import { getSubCategories } from "@repo/common/actions/categories";
 import { selectedCategoryAtom } from "app/atoms/category-atom";
-import { Category, CategoryResponse } from "app/interfaces/category";
+import { Category, CategoryResponse } from "@repo/common/interfaces/category";
 import { useAtom } from "jotai";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";

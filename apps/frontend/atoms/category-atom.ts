@@ -1,4 +1,4 @@
-import { Category } from "app/interfaces/category";
+import { Category } from "@repo/common/interfaces/category";
 import { atom } from "jotai";
 
 export const selectedCategoryAtom = atom<Category>();

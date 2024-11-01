@@ -11,7 +11,7 @@ import {
 } from "@repo/ui/components/ui/card";
 import { Button } from "@repo/ui/components/ui/button";
 import { Separator } from "@repo/ui/components/ui/separator";
-import { getShops } from "../../actions/shops";
+import { getShops } from "@repo/common/actions/shops";
 
 export interface Shop {
   id: string;

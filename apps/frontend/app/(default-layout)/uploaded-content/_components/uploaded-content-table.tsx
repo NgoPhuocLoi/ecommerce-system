@@ -1,5 +1,5 @@
 import { DataTable } from "@repo/ui/components/ui/data-table/index";
-import { getPreviewUploadedImages } from "app/actions/uploaded-content";
+import { getPreviewUploadedImages } from "@repo/common/actions/uploaded-content";
 import { columns } from "./uploaded-content-column";
 
 const UploadedContentTable = async () => {

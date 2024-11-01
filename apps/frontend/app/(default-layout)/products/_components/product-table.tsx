@@ -1,8 +1,8 @@
 import React from "react";
 import { columns } from "./columns";
 import { DataTable } from "@repo/ui/components/ui/data-table/index";
-import { Product } from "app/interfaces/product";
-import { getProducts } from "app/actions/product";
+import { Product } from "@repo/common/interfaces/product";
+import { getProducts } from "@repo/common/actions/product";
 
 const ProductTable = async () => {
   const products: Product[] = await getProducts();

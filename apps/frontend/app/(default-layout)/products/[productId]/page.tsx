@@ -1,5 +1,5 @@
-import { getProductById } from "app/actions/product";
-import { Product } from "app/interfaces/product";
+import { getProductById } from "@repo/common/actions/product";
+import { Product } from "@repo/common/interfaces/product";
 import ProductForm from "../_components/product-form";
 import { redirect } from "next/navigation";
 

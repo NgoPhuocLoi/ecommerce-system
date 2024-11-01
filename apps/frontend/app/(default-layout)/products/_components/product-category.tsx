@@ -1,5 +1,5 @@
-import { getTopLevelCategories } from "app/actions/categories";
-import { Category, CategoryResponse } from "app/interfaces/category";
+import { getTopLevelCategories } from "@repo/common/actions/categories";
+import { Category, CategoryResponse } from "@repo/common/interfaces/category";
 import {
   Card,
   CardContent,
