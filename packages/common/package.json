@@ -8,6 +8,7 @@
     "./utils/*": "./utils/*.ts",
     "./atoms/*": "./atoms/*.ts",
     "./hooks/*": "./hooks/*.ts",
+    "./constants/*": "./constants/*.ts",
     "./icons/*": "./icons/index.ts"
   }
 }
