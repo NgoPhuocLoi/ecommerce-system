@@ -10,7 +10,7 @@ import lz from "lz-string";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getPageLayout } from "../actions/online-shop";
-import DefaultLayoutRenderer from "@repo/ui/components/builder/default-layout-renderer";
+import DefaultLayoutRenderer from "./default-layout-renderer";
 
 interface IShopHeaderProps {
   isAdminBuilder?: boolean;

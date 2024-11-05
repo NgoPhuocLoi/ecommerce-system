@@ -7,5 +7,6 @@ export const PRODUCTS_API = `${BACKEND_BASE_URL}/products`;
 export const CATEGORIES_API = `${BACKEND_BASE_URL}/categories`;
 export const UPLOADED_CONTENT_API = `${BACKEND_BASE_URL}/uploaded-images`;
 export const ONLINE_SHOP_API = `${BACKEND_BASE_URL}/online-shop`;
+export const ADDRESS_API = `${BACKEND_BASE_URL}/addresses`;
 
 export const DEFAULT_LAYOUT = "defaultLayout";

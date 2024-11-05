@@ -4,6 +4,7 @@ import BaseSetting, { IBaseSetting } from "./base-setting";
 import UploadButton from "../../upload-btn";
 import Image from "next/image";
 import { getCookie } from "cookies-next";
+import { DEFAULT_IMAGE_URL } from "@repo/common/constants/image";
 
 interface IImageUploadSettingProps extends IBaseSetting<string> {
   onFileChange: (url: string) => void;
@@ -29,7 +30,7 @@ const ImageUploadSetting = ({
       <div className="group relative w-full hover:bg-gray-700">
         <Image
           alt="test"
-          src={value ?? ""}
+          src={value !== "" ? value : DEFAULT_IMAGE_URL}
           width="0"
           height="0"
           sizes="100vw"

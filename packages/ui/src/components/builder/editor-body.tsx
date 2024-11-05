@@ -59,7 +59,7 @@ export const RenderEditor = ({
     </Frame>
   ) : (
     <Frame>
-      <Element is="div" id="container" canvas>
+      <Element is={PlaceholderContainer} id="container" canvas>
         {/* <ShopHeader />
         <Element is={Layout} canvas></Element>
         <ShopFooter /> */}

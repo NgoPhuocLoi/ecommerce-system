@@ -20,12 +20,10 @@ export interface Shop {
 
 const ShopSelection = async () => {
   const token = await (await auth()).getToken();
-  console.log({ tokennnn: token });
   if (!token) {
     return null;
   }
   const shops: Shop[] = (await getShops(token)) || [];
-  console.log({ shops });
   return (
     <div className="flex h-screen w-screen items-center justify-center py-20">
       <Card className="h-full w-[476px]">
@@ -38,15 +36,12 @@ const ShopSelection = async () => {
           </CardHeader>
 
           <Button className="mr-6" asChild>
-            <Link href="/shop/question">Tạo cửa hàng mới</Link>
+            <Link href="/create-shop">Tạo cửa hàng mới</Link>
           </Button>
         </div>
         <Separator />
         <CardContent>
-          {/* <ScrollArea> */}
           <ShopList shops={shops} />
-
-          {/* </ScrollArea> */}
         </CardContent>
       </Card>
     </div>

@@ -27,12 +27,20 @@ import Image from "next/image";
 import AccountMenu from "./_components/account-menu";
 import Link from "next/link";
 import { Sidebar } from "@repo/ui/components/sidebar";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default function DefautlLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const selectedShopId = cookies().get("selectedShopId");
+
+  if (!selectedShopId) {
+    return redirect("/");
+  }
+
   return (
     <div className="bg-muted/40 flex min-h-screen w-full flex-col">
       <TooltipProvider>

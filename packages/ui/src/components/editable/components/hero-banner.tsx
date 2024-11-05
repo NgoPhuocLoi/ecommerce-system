@@ -6,6 +6,8 @@ import { TextAreaSetting } from "../settings/textarea-setting";
 import { Button } from "../../ui/button";
 import { useApplyRef } from "@repo/common/hooks/useApplyRef";
 import { useSetting } from "@repo/common/hooks/useSetting";
+import ImageUploadSetting from "../settings/image-upload-setting";
+import { DEFAULT_IMAGE_URL } from "@repo/common/constants/image";
 
 interface IHeroBannerProps {
   contentAlign?: "left" | "center" | "right";
@@ -21,6 +23,8 @@ interface IHeroBannerProps {
 
 export const HeroBannerSetting = () => {
   const { props, handlePropChange } = useSetting();
+
+  console.log({ url: props.bgImageUrl });
   return (
     <div className="flex flex-col gap-4">
       <InputSetting
@@ -85,13 +89,40 @@ export const HeroBannerSetting = () => {
         }}
       />
 
-      <ColorSetting
-        title="Background color"
-        value={props.bgColor}
-        onChange={(value) => handlePropChange("bgColor", value)}
-        id={"shop-common-hero-banner-bg-color"}
-        description={"Change the background color of hero banner"}
+      <MultiSelectionSetting
+        id="shop-common-hero-banner-bg-type"
+        title="Background type"
+        description="Config the background type for hero banner"
+        value={props.bgType}
+        selections={[
+          { title: "Color", value: "color" },
+          { title: "Image", value: "image" },
+        ]}
+        placeholder="Select background type"
+        onValueChange={(value) => {
+          handlePropChange("bgType", value);
+        }}
       />
+
+      {props.bgType === "color" ? (
+        <ColorSetting
+          title="Background color"
+          value={props.bgColor}
+          onChange={(value) => handlePropChange("bgColor", value)}
+          id={"shop-common-hero-banner-bg-color"}
+          description={"Change the background color of hero banner"}
+        />
+      ) : (
+        <ImageUploadSetting
+          onFileChange={(url) => {
+            handlePropChange("bgImageUrl", url);
+          }}
+          id={"shop-common-hero-banner-image-url"}
+          title={"Image"}
+          value={props.bgImageUrl ?? DEFAULT_IMAGE_URL}
+          description={"Upload or select existing images"}
+        />
+      )}
     </div>
   );
 };
@@ -118,15 +149,24 @@ export const HeroBanner = ({
   title,
   description,
   buttonLabel,
+  bgImageUrl = DEFAULT_IMAGE_URL,
 }: IHeroBannerProps) => {
   const { applyRef } = useApplyRef();
+  console.log({ bgImageUrl });
   return (
     <div
       ref={applyRef}
       style={{
+        backgroundImage:
+          bgType === "image"
+            ? `url(${bgImageUrl !== "" ? bgImageUrl : DEFAULT_IMAGE_URL})`
+            : undefined,
         height: `${Number(size)}px`,
-        backgroundColor: bgColor,
-        justifyContent: getFlexAlignment(contentAlign),
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        // backgroundOrigin:
+        backgroundColor: bgType === "color" ? bgColor : undefined,
+        // justifyContent: getFlexAlignment(contentAlign),
       }}
       className="flex w-full px-10 py-8"
     >
@@ -151,7 +191,7 @@ HeroBanner.craft = {
     contentAlign: "center",
     size: "300",
     link: "",
-    bgImageUrl: "",
+    bgImageUrl: DEFAULT_IMAGE_URL,
     bgType: "color",
     bgColor: "#eeeeee",
     title: "Hero Banner Title",

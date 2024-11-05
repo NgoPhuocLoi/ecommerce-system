@@ -68,7 +68,7 @@ export const Link = ({
         //   }
         // }
       }}
-      href={`${url}`}
+      href={url?.startsWith("/") ? url : `/${url}`}
       ref={applyRef}
       className={`w-fit`}
       style={{

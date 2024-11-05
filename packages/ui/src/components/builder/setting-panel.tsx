@@ -9,6 +9,7 @@ import { useEditor } from "@craftjs/core";
 import { Button } from "@repo/ui/components/ui/button";
 import { ChevronLeft, Copy, EllipsisVertical, Trash } from "lucide-react";
 import React from "react";
+import { ScrollArea } from "../ui/scroll-area";
 
 const SettingPanel = () => {
   const {
@@ -41,7 +42,7 @@ const SettingPanel = () => {
   }
 
   return (
-    <div className="fixed right-0 top-14 h-full w-[264px] bg-white p-4">
+    <div className="fixed right-0 top-14 h-full w-[264px] bg-white pt-4">
       <div className="flex items-center gap-2">
         <Button
           onClick={() => {
@@ -101,7 +102,9 @@ const SettingPanel = () => {
         )}
       </div>
       <Separator className="my-4 bg-gray-400" />
-      {selected?.settings && React.createElement(selected.settings)}
+      <ScrollArea className="h-[calc(100vh-148px)] pb-4 px-4">
+        {selected?.settings && React.createElement(selected.settings)}
+      </ScrollArea>
     </div>
   );
 };

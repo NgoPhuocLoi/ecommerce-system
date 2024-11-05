@@ -22,6 +22,8 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
 import { productsAtom } from "@repo/common/atoms/product-atom";
+import { useEditor } from "@craftjs/core";
+import { useRouter } from "next/navigation";
 
 interface IProductProps {
   bgColor?: string;
@@ -147,8 +149,34 @@ export const Product = ({
     [selectedProductId, products],
   );
   const { applyRef } = useApplyRef();
+  const router = useRouter();
+
+  const { enabled } = useEditor((state) => {
+    return {
+      enabled: state.options.enabled,
+    };
+  });
+
+  const handleClickProduct = () => {
+    if (enabled) {
+      return;
+    }
+
+    if (!selectedProduct) {
+      return router.push("/san-pham/test");
+    }
+
+    router.push(`/san-pham/${selectedProduct?.id}`);
+  };
+
   return (
-    <div ref={applyRef} className="flex w-full flex-col gap-2">
+    <div
+      onClick={handleClickProduct}
+      ref={applyRef}
+      className={clsx("flex w-full flex-col gap-2", {
+        "cursor-pointer": !enabled,
+      })}
+    >
       <div className="p-2">
         <div
           className={clsx(

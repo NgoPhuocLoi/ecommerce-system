@@ -20,6 +20,13 @@ export const createShop = async (data: {
   name: string;
   domain: string;
   themeId: string;
+  mainCategoryIdToSell: string;
+  hasUsedPlatformBefore: boolean;
+  provinceId: string;
+  districtId: string;
+  wardCode: string;
+  detailAddress: string;
+  phone: string;
 }) => {
   const token = await (await auth())?.getToken();
   if (!token) {
@@ -31,11 +38,17 @@ export const createShop = async (data: {
       hasUsedPlatformBefore: true,
       hasConfirmedEmail: true,
       themeId: Number(data.themeId),
+      provinceId: Number(data.provinceId),
+      districtId: Number(data.districtId),
+      wardCode: data.wardCode,
+      mainCategoryIdToSell: Number(data.mainCategoryIdToSell),
     });
     if (res.ok) {
       const data = await res.json();
       return data;
     }
+
+    console.log({ error: (await res.json())?.errors });
     return null;
   } catch (error) {
     console.log("[Shop action]: Error when creating shop");

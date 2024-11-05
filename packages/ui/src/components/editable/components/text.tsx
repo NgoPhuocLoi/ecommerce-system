@@ -15,6 +15,7 @@ interface ITextProps {
   margin?: string;
   content?: string;
   textAlign?: "left" | "center" | "right";
+  borderRadius?: string;
   textColor?: string;
   fontWeight?: "300" | "400" | "700";
   fontSize?: number;
@@ -31,9 +32,14 @@ export const TextSetting = () => {
     textColor,
     fontWeight,
     fontSize,
+    borderRadius,
   } = props;
   const paddingValues = useMemo(() => getPaddingLikeValue(padding), [padding]);
   const marginValues = useMemo(() => getPaddingLikeValue(margin), [margin]);
+  const borderRadiusValues = useMemo(
+    () => getPaddingLikeValue(borderRadius),
+    [borderRadius],
+  );
   return (
     <div className="flex flex-col gap-4">
       <InputSetting
@@ -145,6 +151,34 @@ export const TextSetting = () => {
         description={"Change the margin of layout"}
       />
 
+      <TabInputSetting
+        values={[
+          { title: "Top", value: "top" },
+          { title: "Right", value: "right" },
+          { title: "Bottom", value: "bottom" },
+          { title: "Left", value: "left" },
+          { title: "All", value: "all" },
+        ]}
+        onValueChange={(value) => {
+          let borderRadius = "";
+
+          if (value.isAllChanged === "true") {
+            borderRadius = `${value.all}px ${value.all}px ${value.all}px ${value.all}px`;
+          } else {
+            borderRadius = Object.values(value)
+              .slice(0, 4)
+              .map((v) => (v === "auto" ? "auto" : `${v}px`))
+              .join(" ");
+          }
+
+          handlePropChange("borderRadius", borderRadius);
+        }}
+        id={"shop-common-layout-borderRadius"}
+        title={"Border radius"}
+        value={borderRadiusValues}
+        description={"Change the borderRadius of layout"}
+      />
+
       <ColorSetting
         value={bgColor}
         onChange={(value) => handlePropChange("bgColor", value)}
@@ -173,6 +207,7 @@ export const Text = ({
   textColor,
   fontWeight,
   fontSize,
+  borderRadius,
 }: ITextProps) => {
   const { applyRef } = useApplyRef();
   return (
@@ -185,6 +220,7 @@ export const Text = ({
         margin,
         textAlign,
         color: textColor,
+        borderRadius,
       }}
     >
       <p
@@ -205,6 +241,7 @@ Text.craft = {
     gap: 8,
     cols: 2,
     margin: "0px 0px 0px 0px",
+    borderRadius: "0px 0px 0px 0px",
     padding: "8px 8px 8px 8px",
     content: "You can edit this text",
     textAlign: "center",

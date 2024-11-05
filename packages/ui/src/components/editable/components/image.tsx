@@ -5,6 +5,7 @@ import { useSetting } from "@repo/common/hooks/useSetting";
 import { getPaddingLikeValue } from "@repo/common/utils/component-setting";
 import NextImage from "next/image";
 import { useMemo } from "react";
+import { DEFAULT_IMAGE_URL } from "@repo/common/constants/image";
 
 interface IImageProps {
   padding?: string;
@@ -113,8 +114,7 @@ export const Image = ({ padding, margin, imageUrl }: IImageProps) => {
 
 Image.craft = {
   props: {
-    imageUrl:
-      "https://images.unsplash.com/photo-1487700160041-babef9c3cb55?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80",
+    imageUrl: DEFAULT_IMAGE_URL,
     margin: "0px 0px 0px 0px",
     padding: "8px 8px 8px 8px",
   },

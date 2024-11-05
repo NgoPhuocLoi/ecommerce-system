@@ -3,9 +3,9 @@ import { pagesAtom } from "@repo/common/atoms/page-atom";
 import { productsAtom } from "@repo/common/atoms/product-atom";
 import { Page } from "@repo/common/interfaces/online-shop";
 import { Product } from "@repo/common/interfaces/product";
-import DefaultLayoutRenderer from "@repo/ui/components/builder/default-layout-renderer";
 import { useHydrateAtoms } from "jotai/utils";
 import { ReactNode } from "react";
+import DefaultLayoutRenderer from "../../components/default-layout-renderer";
 
 interface ILayoutWrapperProps {
   defaultHeaderLayout: string;
