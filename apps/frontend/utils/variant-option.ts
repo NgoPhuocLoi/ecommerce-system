@@ -1,4 +1,4 @@
-import { VariantOption } from "../interfaces/variant";
+import { VariantOption } from "@repo/common/interfaces/variant";
 
 interface HasName {
   name: string;

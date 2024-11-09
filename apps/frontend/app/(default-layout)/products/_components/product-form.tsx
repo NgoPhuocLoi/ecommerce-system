@@ -70,7 +70,7 @@ const ProductForm = ({ badgeLabel, title, product }: IProductFormProps) => {
   const handleEditProduct = async (formData: FormData) => {
     "use server";
     console.log("EDIT PRODUCT");
-    console.log(formData);
+    console.log({ formData });
   };
 
   return (

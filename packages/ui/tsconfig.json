@@ -6,6 +6,6 @@
       "@ui/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "../../apps/frontend/app/(default-layout)/_components/app-sidebar.tsx"],
   "exclude": ["node_modules"]
 }

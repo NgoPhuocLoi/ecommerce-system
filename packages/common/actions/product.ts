@@ -42,3 +42,16 @@ export const getProducts = async (filter?: { name: string }) => {
 
   return await extractMetadataFromResponse(res, []);
 };
+
+export const updateProductById = async (
+  id: string,
+  productData: CreateProductData,
+) => {
+  const res = await tenantSpecificFetch({
+    url: `${PRODUCTS_API}/${id}`,
+    method: "PUT",
+    body: productData,
+  });
+
+  return await res?.json();
+};

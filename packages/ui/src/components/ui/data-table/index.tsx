@@ -68,7 +68,7 @@ export function DataTable<TData, TValue>({
 
   const table = useReactTable({
     data,
-    columns: [selectColumn, ...columns],
+    columns: [selectColumn as ColumnDef<TData, any>, ...columns],
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
@@ -110,7 +110,12 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   onClick={() => {
-                    const link = row.original.link;
+                    const original = row.original as TData extends {
+                      link: string;
+                    }
+                      ? { link: string }
+                      : never;
+                    const link = original.link;
                     if (link) {
                       router.push(link);
                     }

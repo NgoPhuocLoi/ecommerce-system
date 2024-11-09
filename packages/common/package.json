@@ -9,6 +9,7 @@
     "./atoms/*": "./atoms/*.ts",
     "./hooks/*": "./hooks/*.ts",
     "./constants/*": "./constants/*.ts",
-    "./icons/*": "./icons/index.ts"
+    "./icons/*": "./icons/index.ts",
+    "./images/*": "./images/*"
   }
 }
