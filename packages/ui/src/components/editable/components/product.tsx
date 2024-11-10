@@ -24,6 +24,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { productsAtom } from "@repo/common/atoms/product-atom";
 import { useEditor } from "@craftjs/core";
 import { useRouter } from "next/navigation";
+import { formatCurrency } from "@repo/common/utils/currency-format";
 
 interface IProductProps {
   bgColor?: string;
@@ -173,32 +174,41 @@ export const Product = ({
     <div
       onClick={handleClickProduct}
       ref={applyRef}
-      className={clsx("flex w-full flex-col gap-2", {
+      className={clsx("flex w-full flex-col gap-2 ", {
         "cursor-pointer": !enabled,
       })}
     >
-      <div className="p-2">
-        <div
-          className={clsx(
-            "relative flex h-[282px] w-full items-center justify-center",
-            {
-              "bg-[#D9DCE9]": !selectedProduct,
-            },
-          )}
-        >
-          <Image
-            src={selectedProduct?.images[0]?.url ?? icons.productPlaceholder}
-            fill
-            alt="product"
-            className="object-contain"
-          />
-        </div>
+      <div
+        className={clsx(
+          "flex aspect-[2/3] w-full items-center justify-center rounded-lg overflow-hidden",
+          {
+            "bg-[#D9DCE9]": !selectedProduct,
+          },
+        )}
+      >
+        <Image
+          src={selectedProduct?.images[0]?.url ?? icons.productPlaceholder}
+          width={0}
+          height={0}
+          sizes="100vh"
+          alt="product"
+          className="object-cover h-full w-auto"
+        />
       </div>
 
-      <div className="text-center text-sm text-gray-600">
-        <p>BRAND</p>
-        <p>{selectedProduct?.name ?? "Product name"}</p>
-        <p className="mt-2">{selectedProduct?.price ?? 300.0} vnd</p>
+      <div className="text-gray-800 text-sm flex flex-col gap-1">
+        <p>{selectedProduct?.name ?? "Tên sản phẩm sẽ hiển thị ở đây"}</p>
+        <div className="flex gap-2 items-center">
+          <p className="font-bold">
+            {formatCurrency(selectedProduct?.price ?? 500)}
+          </p>
+          <p className="text-xs bg-black text-white flex justify-center items-center px-1 py-[2px] rounded-md font-bold">
+            -10%
+          </p>
+          <p className="line-through text-gray-400">
+            {formatCurrency(selectedProduct?.compare_at_price ?? 500)}
+          </p>
+        </div>
       </div>
     </div>
   );
