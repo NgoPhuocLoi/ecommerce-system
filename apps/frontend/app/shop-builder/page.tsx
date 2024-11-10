@@ -25,6 +25,7 @@ const Page = async ({ searchParams }: { searchParams: { pageId: string } }) => {
         products={productsRes}
         defaultHeaderLayout={onlineShop[0].defaultHeaderLayout}
         defaultFooterLayout={onlineShop[0].defaultFooterLayout}
+        shouldDisplayLayoutEditor={searchParams.pageId === "defaultLayout"}
       />
     </div>
   );

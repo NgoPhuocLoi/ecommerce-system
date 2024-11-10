@@ -17,7 +17,7 @@ export const tenantSpecificFetch = async ({
   method: string;
   body?: Record<string, string>;
 }) => {
-  const shopHost = (await cookies()).get("shop");
+  const shopHost = cookies().get("shop");
   const shopDomain = shopHost?.value.split(".")[0];
   const shopId = await getShopIdFromShopDomain(shopDomain ?? "");
   console.log({ shopId });

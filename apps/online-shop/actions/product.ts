@@ -5,6 +5,7 @@ import {
   extractMetadataFromResponse,
   tenantSpecificFetch,
 } from "../utils/fetch";
+import { Product } from "@repo/common/interfaces/product";
 
 export const getProducts = async (filter?: { name: string }) => {
   let url = PRODUCTS_API;
@@ -21,4 +22,15 @@ export const getProducts = async (filter?: { name: string }) => {
   }
 
   return await extractMetadataFromResponse(res, []);
+};
+
+export const getProductById = async (
+  id: string,
+): Promise<Product | undefined> => {
+  const res = await tenantSpecificFetch({
+    url: `${PRODUCTS_API}/${id}`,
+    method: "GET",
+  });
+
+  return await extractMetadataFromResponse(res);
 };

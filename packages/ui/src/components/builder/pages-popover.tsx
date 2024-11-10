@@ -160,28 +160,27 @@ const PagesPopover = ({ isAdminBuilder }: { isAdminBuilder?: boolean }) => {
               className="bg-background h-8 w-full rounded-lg py-1 pl-8"
             />
           </div>
-          {isAdminBuilder && (
-            <>
-              <div
-                onClick={() => {
-                  onSelectPage(null);
-                  router.replace(
-                    `/admin-builder?themeId=${searchParams.get("themeId")}&pageId=defaultLayout`,
-                  );
-                }}
-                className={clsx(
-                  "flex cursor-pointer items-center gap-2 rounded-md p-2 hover:bg-gray-100",
-                  {
-                    "bg-gray-100": selectedPage === null,
-                  },
-                )}
-              >
-                <LayoutTemplate size={16} />
-                <p className="text-sm">Layout mặc định</p>
-              </div>
-              <Separator />
-            </>
-          )}
+
+          <div
+            onClick={() => {
+              onSelectPage(null);
+              const urlToReplace = isAdminBuilder
+                ? `/admin-builder?themeId=${searchParams.get("themeId")}&pageId=defaultLayout`
+                : `/shop-builder?pageId=defaultLayout`;
+              router.replace(urlToReplace);
+            }}
+            className={clsx(
+              "flex cursor-pointer items-center gap-2 rounded-md p-2 hover:bg-gray-100",
+              {
+                "bg-gray-100": selectedPage === null,
+              },
+            )}
+          >
+            <LayoutTemplate size={16} />
+            <p className="text-sm">Layout mặc định</p>
+          </div>
+          <Separator />
+
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="list">
               {(provided) => (
