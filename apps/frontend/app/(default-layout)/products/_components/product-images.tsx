@@ -23,7 +23,7 @@ const ProductImages = async ({ initialImages }: IProductImagesProps) => {
         <CardHeader>
           <CardTitle>Hình ảnh sản phẩm</CardTitle>
           <CardDescription>
-            Lipsum dolor sit amet, consectetur adipiscing elit
+            Tải ảnh lên hoặc chọn ảnh từ thư viện đã tải
           </CardDescription>
         </CardHeader>
         <CardContent>

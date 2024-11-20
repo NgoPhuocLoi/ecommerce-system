@@ -15,7 +15,7 @@ interface ITextSelectionProps {
   options: Record<string, any>[];
   displayField: string;
   valueField: string;
-  label: string;
+  label?: string;
   placeholder?: string;
   disabled?: boolean;
 }
@@ -32,7 +32,7 @@ const TextSelection = ({
 }: ITextSelectionProps) => {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <Label>{label}</Label>
+      {label && <Label>{label}</Label>}
       <Select
         disabled={disabled}
         defaultValue={defaultValue}

@@ -107,12 +107,7 @@ const ProductVariantsTable = ({
     setVariants(variants);
   }, [variantOptions]);
 
-  const onChangeCustomValue = (
-    id: string,
-    key: string,
-    value: any,
-    outerId?: string,
-  ) => {
+  const onChangeCustomValue = (id: string, key: string, value: any) => {
     const newVariants = variants.map((variant) => {
       const v = Number(value) ?? 0;
       if (variant.id === id) {
@@ -181,9 +176,9 @@ const ProductVariantsTable = ({
   return (
     <div ref={containerRef}>
       <div className="grid grid-cols-6 gap-4 rounded-sm border bg-gray-100 p-2 text-sm text-gray-800">
-        <div className="col-span-3">Variant</div>
-        <div className="col-span-2">Price</div>
-        <div>Quantity</div>
+        <div className="col-span-3">Biến thể</div>
+        <div className="col-span-2">Giá</div>
+        <div>Số lượng</div>
       </div>
       <Separator />
 
@@ -197,7 +192,7 @@ const ProductVariantsTable = ({
         getNonEmptyNameOptionsList(
           variantOptions[0]!.values,
           variantOptions[0]!.isRecommend,
-        ).map((outerValue, outerIndex) => (
+        ).map((outerValue) => (
           <Collapsible key={outerValue.id}>
             <div className="grid grid-cols-6 items-center gap-4 rounded-sm border border-t-0 p-2 hover:bg-gray-50">
               <CollapsibleTrigger asChild>
@@ -266,7 +261,7 @@ const ProductVariantsTable = ({
                   variantOptions[1]!.values,
                   variantOptions[1]!.isRecommend,
                 )
-                  .map((value, index) => {
+                  .map((value) => {
                     let innerValues: any[] = [];
 
                     if (variantOptions[2]) {
@@ -277,7 +272,7 @@ const ProductVariantsTable = ({
                     }
 
                     if (innerValues.length > 0) {
-                      return innerValues.map((innerValue, innerIndex) => (
+                      return innerValues.map((innerValue) => (
                         <div
                           key={value.id + innerValue.id}
                           className="grid cursor-pointer grid-cols-6 items-center gap-4 rounded-sm border border-t-0 p-2 hover:bg-gray-50"
@@ -353,7 +348,6 @@ const ProductVariantsTable = ({
                                 `${outerValue.id}/${value.id}`,
                                 "price",
                                 e.target.value,
-                                outerValue.id,
                               );
                             }}
                           />
@@ -371,7 +365,6 @@ const ProductVariantsTable = ({
                                 `${outerValue.id}/${value.id}`,
                                 "quantity",
                                 e.target.value,
-                                outerValue.id,
                               );
                             }}
                           />

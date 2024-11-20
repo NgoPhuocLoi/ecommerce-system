@@ -3,8 +3,12 @@ import { Product } from "@repo/common/interfaces/product";
 import { formatCurrency } from "@repo/common/utils/currency-format";
 import { Button } from "@repo/ui/components/ui/button";
 import { Minus, Plus, ShoppingBasket } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import clsx from "clsx";
+import { useAtom } from "jotai";
+import { currentCustomerAtom } from "../../../../../atom/current-customer";
+import { cartAtom, CartItem } from "../../../../../atom/cart";
+import { toast } from "sonner";
 
 interface IProductDetailProps {
   product: Product;
@@ -16,9 +20,71 @@ const ProductDetail = ({ product }: IProductDetailProps) => {
       attribute.values[0]!.id.toString(),
     ) ?? [],
   );
+  const [cart, setCart] = useAtom(cartAtom);
+  const attributeIdToIndexMap = useRef(
+    new Map<number, number>(
+      product.attributes?.map((attribute, index) => [
+        attribute.id as number,
+        index,
+      ]) ?? [],
+    ),
+  );
+  const [currentCustomer] = useAtom(currentCustomerAtom);
+
+  const currentVairant = useMemo(() => {
+    console.log({
+      selectedValueIds,
+      variants: product.variants,
+      map: attributeIdToIndexMap.current,
+    });
+    return product.variants?.find((variant) => {
+      return variant.attributesInfo?.every(
+        (attr) =>
+          selectedValueIds[
+            attributeIdToIndexMap.current.get(attr.attributeId as number)!
+          ] === attr.valueId.toString(),
+      );
+    });
+  }, [selectedValueIds]);
+
+  const handleAddToCart = () => {
+    const cartItem: CartItem = {
+      productId: product.id.toString(),
+      variant: currentVairant!,
+      quantity: 1,
+      pricePerItem: product!.price,
+      attributeValues:
+        currentVairant?.attributesInfo?.map(
+          (attr) =>
+            product.attributes
+              ?.find((a) => a.id === attr.attributeId)
+              ?.values.find((v) => v.id === attr.valueId)?.name ?? "",
+        ) ?? [],
+      thumbnailUrl: product.images[0]?.url,
+    };
+
+    const foundIndex = cart.findIndex(
+      (item) =>
+        item.productId === cartItem.productId &&
+        item.variant.id === cartItem.variant.id,
+    );
+
+    if (foundIndex !== -1) {
+      const newCart = [...cart];
+      newCart[foundIndex]!.quantity += 1;
+      setCart(newCart);
+    } else {
+      setCart([...cart, cartItem]);
+    }
+
+    toast.info("Đã thêm vào giỏ hàng");
+  };
+
   return (
     <div className="w-full h-full flex flex-col gap-4 text-gray-800">
-      <h1 className="text-4xl font-bold">{product?.name}</h1>
+      <h1 className="text-4xl font-bold">
+        {product?.name} {currentVairant?.id}
+      </h1>
 
       <div className="flex gap-2 items-baseline">
         <p className="text-2xl font-bold">
@@ -72,6 +138,7 @@ const ProductDetail = ({ product }: IProductDetailProps) => {
             <Minus size={16} />
           </div>
           <input
+            defaultValue={1}
             className="size-10 border border-black border-x-0 text-center"
             // onChange={(e) => {
             //   // ignore value except number
@@ -83,7 +150,10 @@ const ProductDetail = ({ product }: IProductDetailProps) => {
           </div>
         </div>
 
-        <Button className="flex gap-2 rounded-full px-8">
+        <Button
+          onClick={handleAddToCart}
+          className="flex gap-2 rounded-full px-8"
+        >
           {" "}
           <ShoppingBasket /> Thêm vào giỏ hàng
         </Button>

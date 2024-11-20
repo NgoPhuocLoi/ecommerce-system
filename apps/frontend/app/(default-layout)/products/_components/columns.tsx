@@ -10,7 +10,7 @@ export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
-      return <DataTableColumnHeader column={column} title="Name" />;
+      return <DataTableColumnHeader column={column} title="Tên" />;
     },
     cell({ row: { original } }) {
       return (
@@ -33,7 +33,7 @@ export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "status",
     header: ({ column }) => {
-      return <DataTableColumnHeader column={column} title="Status" />;
+      return <DataTableColumnHeader column={column} title="Trạng thái" />;
     },
     cell: ({ row }) => {
       const value = row.original.is_active ? "active" : "inactive";
@@ -53,17 +53,17 @@ export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "available_quantity",
     header: ({ column }) => {
-      return <DataTableColumnHeader column={column} title="Quantity" />;
+      return <DataTableColumnHeader column={column} title="Số lượng" />;
     },
   },
   {
     accessorKey: "price",
     header: ({ column }) => {
-      return <DataTableColumnHeader column={column} title="Price" />;
+      return <DataTableColumnHeader column={column} title="Giá" />;
     },
   },
   {
     accessorKey: "category.name",
-    header: "Category",
+    header: "Danh mục",
   },
 ];

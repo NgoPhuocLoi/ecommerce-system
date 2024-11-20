@@ -14,10 +14,7 @@ interface IProductVariantsProps {
   initialAttributes?: Attribute[];
 }
 
-const ProductVariants = ({
-  initialVariants,
-  initialAttributes,
-}: IProductVariantsProps) => {
+const ProductVariants = ({ initialAttributes }: IProductVariantsProps) => {
   return (
     <div>
       <Card>

@@ -116,7 +116,7 @@ const ProductForm = ({ badgeLabel, title, product }: IProductFormProps) => {
             </div>
           </div>
           <div className="flex justify-end">
-            <Button type="submit">Save</Button>
+            <Button type="submit">Lưu</Button>
           </div>
         </form>
         <div className="flex items-center justify-center gap-2 md:hidden">

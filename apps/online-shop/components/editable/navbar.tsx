@@ -1,27 +1,31 @@
-import { useAtom } from "jotai";
-import { ShoppingCart, User } from "lucide-react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { Link } from "./link";
+import { pagesAtom } from "@repo/common/atoms/page-atom";
 import { Column } from "@repo/ui/components/editable/components/column";
 import { Text } from "@repo/ui/components/editable/components/text";
-import { pagesAtom } from "@repo/common/atoms/page-atom";
+import { useAtom } from "jotai";
+import { ShoppingCart } from "lucide-react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { Link } from "./link";
+import CustomerAuthDialog from "../customer-auth-dialog";
+import { currentCustomerAtom } from "../../atom/current-customer";
+import CustomerAccount from "../customer-account";
 
 export const Navbar = () => {
   const [pages] = useAtom(pagesAtom);
+  const [currentCustomer] = useAtom(currentCustomerAtom);
   const searchParams = useSearchParams();
   const pathname = usePathname();
   return (
     // <Element is={Column} id="nav-bar" canvas>
     <Column
       bgColor="#000"
-      padding="16px"
+      padding="0 16px"
       flexDirection="row"
       contentAlign="flex-start"
     >
       <Text
         content="Home"
         bgColor="transparent"
-        padding="8px"
+        padding="24px 8px"
         textColor="#fff"
         fontWeight="700"
         fontSize={24}
@@ -46,7 +50,7 @@ export const Navbar = () => {
               key={page.id}
               url={urlToNavigate}
               content={page.name}
-              padding="8px"
+              padding="24px 8px"
               bgColor="transparent"
               textColor="white"
               fontSize={16}
@@ -54,10 +58,12 @@ export const Navbar = () => {
           );
         })}
 
-      <div className="ml-auto flex gap-4">
-        <Link isIcon url="/xac-thuc" bgColor="transparent" textColor="#fff">
-          <User size={24} />
-        </Link>
+      <div className="ml-auto flex gap-4 items-center">
+        {currentCustomer ? (
+          <CustomerAccount currentCustomer={currentCustomer} />
+        ) : (
+          <CustomerAuthDialog />
+        )}
         <Link isIcon url="/gio-hang" bgColor="transparent" textColor="#fff">
           <ShoppingCart size={24} />
         </Link>

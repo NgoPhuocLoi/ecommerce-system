@@ -1,7 +1,6 @@
 "use client";
 import { Attribute } from "@repo/common/interfaces/category";
 import { VariantResponse } from "@repo/common/interfaces/product";
-import { selectedCategoryAtom } from "app/atoms/category-atom";
 import { Badge } from "@repo/ui/components/ui/badge";
 import { Button } from "@repo/ui/components/ui/button";
 import { Checkbox } from "@repo/ui/components/ui/checkbox";
@@ -14,6 +13,7 @@ import {
 } from "@repo/ui/components/ui/popover";
 import { ScrollArea } from "@repo/ui/components/ui/scroll-area";
 import { Separator } from "@repo/ui/components/ui/separator";
+import { selectedCategoryAtom } from "app/atoms/category-atom";
 import { useAtom } from "jotai";
 import { PlusCircle, Trash } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -38,19 +38,11 @@ interface IProductVariantListProps {
 }
 
 const ProductVariantList = ({
-  initialVariants,
   initialAttributes,
 }: IProductVariantListProps) => {
   const [variantOptions, setVariantOptions] = useState<VariantOption[]>([]);
-  const [variantCustomValues, setVariantCustomValues] = useState({
-    mappingId: "id1-index/id2-index/id3-index",
-    price: 0,
-    quantity: 0,
-    uploadedThumbnail: {
-      publicId: "",
-      url: "",
-    },
-  });
+
+  // eslint-disable-next-line no-undef
   const timer = useRef<NodeJS.Timeout | null>(null);
   const [selectedCategory] = useAtom(selectedCategoryAtom);
 
@@ -71,8 +63,8 @@ const ProductVariantList = ({
       );
     }
 
-    if (initialVariants) {
-    }
+    // if (initialVariants) {
+    // }
   }, [initialAttributes]);
 
   const handleAddOption = (option?: VariantOption) => {
@@ -249,10 +241,6 @@ const ProductVariantList = ({
     });
   };
 
-  const test = () => {
-    console.log(variantOptions);
-  };
-
   return (
     <>
       <input
@@ -281,7 +269,7 @@ const ProductVariantList = ({
                           variant="outline"
                         >
                           <PlusCircle size={12} className="mr-1" />
-                          Add values
+                          Thêm giá trị
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent align="start">
@@ -366,7 +354,7 @@ const ProductVariantList = ({
                   className="flex flex-col gap-4 rounded-md border px-10 py-6"
                 >
                   <div className="grid w-full items-center gap-2">
-                    <Label htmlFor={option.id}>Option name</Label>
+                    <Label htmlFor={option.id}>Tên thuộc tính</Label>
                     <Input
                       type="text"
                       id={option.id}
@@ -442,7 +430,7 @@ const ProductVariantList = ({
                       variant="outline"
                       className="border-red-500 text-red-500 hover:text-red-500"
                     >
-                      Delete
+                      Xóa
                     </Button>
                     <Button
                       onClick={() => {
@@ -451,7 +439,7 @@ const ProductVariantList = ({
                       type="button"
                       size="sm"
                     >
-                      Done
+                      Xong
                     </Button>
                   </div>
                 </div>
@@ -471,13 +459,13 @@ const ProductVariantList = ({
             className="w-fit"
           >
             <PlusCircle size={14} className="mr-2" />
-            Add options like color or size
+            Thêm thuộc tính
           </Button>
         )}
         {!!selectedCategory?.recommendAttributes.length && (
           <div className="flex flex-col gap-3 rounded-md bg-gray-50 p-4">
             <p className="text-sm font-bold text-gray-800">
-              Recommend attributes
+              Thuộc tính nên chọn
             </p>
 
             <div className="flex flex-wrap gap-2 gap-y-3">
@@ -502,9 +490,13 @@ const ProductVariantList = ({
         )}
       </div>
 
-      <Separator className="my-6" />
+      {variantOptions.length > 0 && (
+        <>
+          <Separator className="my-6" />
 
-      <ProductVariantsTable variantOptions={variantOptions} />
+          <ProductVariantsTable variantOptions={variantOptions} />
+        </>
+      )}
     </>
   );
 };

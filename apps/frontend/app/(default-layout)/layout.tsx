@@ -1,39 +1,14 @@
-import {
-  Home,
-  LineChart,
-  Package,
-  PanelLeft,
-  Search,
-  Settings,
-  ShoppingCart,
-  Users2,
-} from "lucide-react";
+import { Search } from "lucide-react";
 import React from "react";
 
-import { Button } from "@repo/ui/components/ui/button";
 import { Input } from "@repo/ui/components/ui/input";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@repo/ui/components/ui/sheet";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@repo/ui/components/ui/tooltip";
-import Image from "next/image";
-import AccountMenu from "./_components/account-menu";
-import Link from "next/link";
-import { Sidebar } from "@repo/ui/components/sidebar";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import logoPng from "@repo/common/images/logo.png";
 import {
   SidebarProvider,
   SidebarTrigger,
 } from "@repo/ui/components/ui/sidebar";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import AccountMenu from "./_components/account-menu";
 import { AppSidebar } from "./_components/app-sidebar";
 
 export default function DefautlLayout({

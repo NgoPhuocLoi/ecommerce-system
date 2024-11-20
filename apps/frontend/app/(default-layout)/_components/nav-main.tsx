@@ -1,7 +1,5 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
-
 import {
   Collapsible,
   CollapsibleContent,
@@ -14,8 +12,8 @@ import {
   SidebarMenuItem,
 } from "@repo/ui/components/ui/sidebar";
 import { links } from "app/constants/sidebar-links";
-import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
+import { usePathname, useRouter } from "next/navigation";
 
 export function NavMain() {
   const pathname = usePathname();
@@ -36,7 +34,7 @@ export function NavMain() {
                 onClick={() => router.push(item.path)}
                 className={clsx("rounded-md", {
                   "bg-black text-white": isActive,
-                  "hover:bg-gray-100 ": !isActive,
+                  // "hover:bg-gray-100 ": !isActive,
                 })}
               >
                 <CollapsibleTrigger asChild>

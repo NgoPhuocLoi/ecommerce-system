@@ -12,21 +12,30 @@ export const tenantSpecificFetch = async ({
   url,
   method,
   body,
+  needAuth,
 }: {
   url: string;
   method: string;
   body?: Record<string, string>;
+  needAuth?: boolean;
 }) => {
   const shopHost = cookies().get("shop");
   const shopDomain = shopHost?.value.split(".")[0];
   const shopId = await getShopIdFromShopDomain(shopDomain ?? "");
-  console.log({ shopId });
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+    "x-shop-id": shopId,
+  };
+  if (needAuth) {
+    const token = cookies().get("token")?.value;
+    console.log({ tokenInheader: token });
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  console.log({ headers });
   return fetch(url, {
     method,
-    headers: {
-      "Content-Type": "application/json",
-      "x-shop-id": shopId,
-    } as HeadersInit,
+    headers,
     body: JSON.stringify(body),
   });
 };

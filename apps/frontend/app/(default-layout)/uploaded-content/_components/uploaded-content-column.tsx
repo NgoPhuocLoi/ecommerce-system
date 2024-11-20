@@ -12,7 +12,7 @@ export const columns: ColumnDef<PreviewUploadedContent>[] = [
   {
     accessorKey: "public_id",
     header: ({ column }) => {
-      return <DataTableColumnHeader column={column} title="File name" />;
+      return <DataTableColumnHeader column={column} title="Tên file" />;
     },
     cell({ row: { original } }) {
       return (
@@ -32,7 +32,7 @@ export const columns: ColumnDef<PreviewUploadedContent>[] = [
   {
     accessorKey: "created_at",
     header: ({ column }) => {
-      return <DataTableColumnHeader column={column} title="Date added" />;
+      return <DataTableColumnHeader column={column} title="Ngày được thêm" />;
     },
     cell: ({ row }) => {
       return (
@@ -50,7 +50,7 @@ export const columns: ColumnDef<PreviewUploadedContent>[] = [
   {
     accessorKey: "bytes",
     header: ({ column }) => {
-      return <DataTableColumnHeader column={column} title="Size" />;
+      return <DataTableColumnHeader column={column} title="Kích cỡ" />;
     },
     cell: ({ row }) => {
       return <span>{prettyBytes(row.original.size)}</span>;
@@ -59,7 +59,7 @@ export const columns: ColumnDef<PreviewUploadedContent>[] = [
   {
     accessorKey: "something",
     header: "References",
-    cell: ({ row }) => {
+    cell: () => {
       return <div className="w-full pl-10">--</div>;
     },
   },
