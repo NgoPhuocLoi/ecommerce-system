@@ -17,6 +17,7 @@ import { useMemo, useState } from "react";
 import { customerLogin, customerRegister } from "../actions/customer";
 import { useAtom } from "jotai";
 import { currentCustomerAtom } from "../atom/current-customer";
+import clsx from "clsx";
 
 interface AuthFormProps {
   onChangeMode: (mode: "login" | "register") => void;
@@ -192,14 +193,35 @@ const RegisterForm = ({ onChangeMode }: AuthFormProps) => {
   );
 };
 
-const CustomerAuthDialog = () => {
+const CustomerAuthDialog = ({
+  initialOpen,
+  onClose,
+}: {
+  initialOpen?: boolean;
+  onClose?: () => void;
+}) => {
   const [mode, setMode] = useState<"login" | "register">("login");
-  const [openAuthDialog, setOpenAuthDialog] = useState(false);
+  const [openAuthDialog, setOpenAuthDialog] = useState(initialOpen ?? false);
   const isLogin = useMemo(() => mode === "login", [mode]);
   return (
-    <Dialog open={openAuthDialog} onOpenChange={setOpenAuthDialog}>
+    <Dialog
+      open={openAuthDialog}
+      onOpenChange={(value) => {
+        if (!value && onClose) {
+          onClose();
+        }
+        setOpenAuthDialog(value);
+      }}
+    >
       <DialogTrigger asChild>
-        <div className="p-2 rounded-md hover:bg-white hover:text-black text-white cursor-pointer duration-100">
+        <div
+          className={clsx(
+            "p-2 rounded-md hover:bg-white hover:text-black text-white cursor-pointer duration-100",
+            {
+              hidden: initialOpen,
+            },
+          )}
+        >
           <User size={24} />
         </div>
       </DialogTrigger>

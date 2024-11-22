@@ -8,10 +8,12 @@ import { Link } from "./link";
 import CustomerAuthDialog from "../customer-auth-dialog";
 import { currentCustomerAtom } from "../../atom/current-customer";
 import CustomerAccount from "../customer-account";
+import { cartCountAtom } from "../../atom/cart";
 
 export const Navbar = () => {
   const [pages] = useAtom(pagesAtom);
   const [currentCustomer] = useAtom(currentCustomerAtom);
+  const [cartCount] = useAtom(cartCountAtom);
   const searchParams = useSearchParams();
   const pathname = usePathname();
   return (
@@ -65,7 +67,12 @@ export const Navbar = () => {
           <CustomerAuthDialog />
         )}
         <Link isIcon url="/gio-hang" bgColor="transparent" textColor="#fff">
-          <ShoppingCart size={24} />
+          <div className="relative">
+            <ShoppingCart size={24} />
+            <div className="absolute -top-2 -right-2 bg-white text-black rounded-full w-4 h-4 flex items-center justify-center">
+              {cartCount}
+            </div>
+          </div>
         </Link>
       </div>
     </Column>

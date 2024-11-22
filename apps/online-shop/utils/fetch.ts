@@ -13,11 +13,13 @@ export const tenantSpecificFetch = async ({
   method,
   body,
   needAuth,
+  skipCache,
 }: {
   url: string;
   method: string;
-  body?: Record<string, string>;
+  body?: Record<string, string | number>;
   needAuth?: boolean;
+  skipCache?: true;
 }) => {
   const shopHost = cookies().get("shop");
   const shopDomain = shopHost?.value.split(".")[0];
@@ -33,11 +35,17 @@ export const tenantSpecificFetch = async ({
   }
 
   console.log({ headers });
-  return fetch(url, {
+
+  const options: RequestInit = {
     method,
     headers,
     body: JSON.stringify(body),
-  });
+  };
+
+  if (skipCache) {
+    options.cache = "no-cache";
+  }
+  return fetch(url, options);
 };
 
 export const extractMetadataFromResponse = async (

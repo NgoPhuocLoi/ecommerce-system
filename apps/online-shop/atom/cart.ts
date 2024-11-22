@@ -1,4 +1,5 @@
 import { Variant } from "@repo/common/interfaces/product";
+import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 export interface CartItem {
@@ -10,4 +11,4 @@ export interface CartItem {
   thumbnailUrl?: string;
 }
 
-export const cartAtom = atomWithStorage<CartItem[]>("cart", []);
+export const cartCountAtom = atom<number>(0);

@@ -6,6 +6,7 @@ import { Product } from "@repo/common/interfaces/product";
 import { useHydrateAtoms } from "jotai/utils";
 import { ReactNode } from "react";
 import DefaultLayoutRenderer from "../../components/default-layout-renderer";
+import { cartCountAtom } from "../../atom/cart";
 
 interface ILayoutWrapperProps {
   defaultHeaderLayout: string;
@@ -13,6 +14,7 @@ interface ILayoutWrapperProps {
   children: ReactNode;
   products: Product[];
   pages: Page[];
+  countCart: number;
 }
 
 const LayoutWrapper = ({
@@ -21,9 +23,11 @@ const LayoutWrapper = ({
   defaultHeaderLayout,
   products,
   pages,
+  countCart,
 }: ILayoutWrapperProps) => {
   useHydrateAtoms([[pagesAtom, pages]]);
   useHydrateAtoms([[productsAtom, products]]);
+  useHydrateAtoms([[cartCountAtom, countCart]]);
   return (
     <div>
       <DefaultLayoutRenderer defaultLayout={defaultHeaderLayout} />

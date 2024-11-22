@@ -1,44 +1,31 @@
-import React, { useMemo } from "react";
-import Image from "next/image";
-import { Minus, Plus, Trash } from "lucide-react";
+"use client";
 import { formatCurrency } from "@repo/common/utils/currency-format";
-import { Separator } from "@repo/ui/components/ui/separator";
-import { cartAtom, CartItem as ICartItem } from "../../../../atom/cart";
-import { useAtom } from "jotai";
-import { productsAtom } from "@repo/common/atoms/product-atom";
 import { Button } from "@repo/ui/components/ui/button";
+import { Separator } from "@repo/ui/components/ui/separator";
+import { Minus, Plus, Trash } from "lucide-react";
+import Image from "next/image";
+import { CartResponse } from "../../../../interfaces/cart";
 
 const FALLBACK_URL =
   "https://media3.coolmate.me/cdn-cgi/image/width=320,height=362,quality=80/uploads/May2024/qddpden7.jpg";
 
-const CartItem = ({ cartItem }: { cartItem: ICartItem }) => {
-  const [products] = useAtom(productsAtom);
-  const [, setCart] = useAtom(cartAtom);
-  const product = useMemo(
-    () => products.find((p) => p.id.toString() === cartItem.productId),
-    [products, cartItem.productId],
-  );
+interface ICartItemProps {
+  cartItem: CartResponse;
+  onCartItemChange: (cartItem: CartResponse, quantity: number) => void;
+  onDeleteItem: (cartItem: CartResponse) => void;
+}
 
+const CartItem = ({
+  cartItem,
+  onCartItemChange,
+  onDeleteItem,
+}: ICartItemProps) => {
   const handleRemoveCartItem = () => {
-    setCart((prev) =>
-      prev.filter((item) => item.variant.id !== cartItem.variant.id),
-    );
+    onDeleteItem(cartItem);
   };
 
   const handleChangeNumberOfItem = (value: number) => {
-    const newQuantity = cartItem.quantity + value;
-    if (newQuantity <= 0) {
-      handleRemoveCartItem();
-      return;
-    }
-    setCart((prev) =>
-      prev.map((item) => {
-        if (item.variant.id === cartItem.variant.id) {
-          return { ...item, quantity: newQuantity };
-        }
-        return item;
-      }),
-    );
+    onCartItemChange(cartItem, value);
   };
 
   return (
@@ -47,7 +34,7 @@ const CartItem = ({ cartItem }: { cartItem: ICartItem }) => {
         <div className="col-span-4 flex gap-4">
           <div className="flex flex-shrink-0 gap-4 w-[120px] rounded-lg overflow-hidden">
             <Image
-              src={cartItem.thumbnailUrl ?? FALLBACK_URL}
+              src={cartItem.images[0]?.url ?? ""}
               width={0}
               height={0}
               sizes="100vw"
@@ -57,7 +44,7 @@ const CartItem = ({ cartItem }: { cartItem: ICartItem }) => {
           </div>
           <div className="flex flex-col">
             <div className="flex flex-col">
-              <h1 className="">{product?.name}</h1>
+              <h1 className="">{cartItem.productName}</h1>
               <p className="text-gray-500 text-sm">
                 {cartItem.attributeValues?.join(" / ")}
               </p>

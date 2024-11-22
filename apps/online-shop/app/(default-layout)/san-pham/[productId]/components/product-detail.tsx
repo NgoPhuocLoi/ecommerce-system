@@ -2,13 +2,13 @@
 import { Product } from "@repo/common/interfaces/product";
 import { formatCurrency } from "@repo/common/utils/currency-format";
 import { Button } from "@repo/ui/components/ui/button";
+import clsx from "clsx";
 import { Minus, Plus, ShoppingBasket } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
-import clsx from "clsx";
-import { useAtom } from "jotai";
-import { currentCustomerAtom } from "../../../../../atom/current-customer";
-import { cartAtom, CartItem } from "../../../../../atom/cart";
 import { toast } from "sonner";
+import { addToCart } from "../../../../../actions/cart";
+import { useAtom } from "jotai";
+import { cartCountAtom } from "../../../../../atom/cart";
 
 interface IProductDetailProps {
   product: Product;
@@ -20,7 +20,7 @@ const ProductDetail = ({ product }: IProductDetailProps) => {
       attribute.values[0]!.id.toString(),
     ) ?? [],
   );
-  const [cart, setCart] = useAtom(cartAtom);
+  const [, setCountCart] = useAtom(cartCountAtom);
   const attributeIdToIndexMap = useRef(
     new Map<number, number>(
       product.attributes?.map((attribute, index) => [
@@ -29,7 +29,6 @@ const ProductDetail = ({ product }: IProductDetailProps) => {
       ]) ?? [],
     ),
   );
-  const [currentCustomer] = useAtom(currentCustomerAtom);
 
   const currentVairant = useMemo(() => {
     console.log({
@@ -47,35 +46,16 @@ const ProductDetail = ({ product }: IProductDetailProps) => {
     });
   }, [selectedValueIds]);
 
-  const handleAddToCart = () => {
-    const cartItem: CartItem = {
-      productId: product.id.toString(),
-      variant: currentVairant!,
+  const handleAddToCart = async () => {
+    const variantId = parseInt(currentVairant!.id.toString());
+
+    const res = await addToCart({
+      variantId,
       quantity: 1,
-      pricePerItem: product!.price,
-      attributeValues:
-        currentVairant?.attributesInfo?.map(
-          (attr) =>
-            product.attributes
-              ?.find((a) => a.id === attr.attributeId)
-              ?.values.find((v) => v.id === attr.valueId)?.name ?? "",
-        ) ?? [],
-      thumbnailUrl: product.images[0]?.url,
-    };
+      pricePerItem: product.price,
+    });
 
-    const foundIndex = cart.findIndex(
-      (item) =>
-        item.productId === cartItem.productId &&
-        item.variant.id === cartItem.variant.id,
-    );
-
-    if (foundIndex !== -1) {
-      const newCart = [...cart];
-      newCart[foundIndex]!.quantity += 1;
-      setCart(newCart);
-    } else {
-      setCart([...cart, cartItem]);
-    }
+    setCountCart((prev) => prev + 1);
 
     toast.info("Đã thêm vào giỏ hàng");
   };

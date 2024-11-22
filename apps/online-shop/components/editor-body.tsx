@@ -36,7 +36,17 @@ export const RenderEditor = ({
   }, [jsonLayout]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div
+        className="fixed z-10 top-[68px] left-0 right-0 bottom-0 w-full h-full"
+        style={{
+          background: "#343a4199",
+          backdropFilter: "blur(15px)",
+          WebkitBackdropFilter: "blur(15px)",
+          height: "100%",
+        }}
+      ></div>
+    );
   }
 
   if (isAdminBuilder) {

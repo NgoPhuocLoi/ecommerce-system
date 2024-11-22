@@ -38,7 +38,7 @@ const CustomerInformation = ({ provinces }: ICustomerInformationProps) => {
       );
       setDistricts(data);
     };
-    fetchDistricts();
+    if (deliveryAddress.provinceId) fetchDistricts();
   }, [deliveryAddress.provinceId]);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const CustomerInformation = ({ provinces }: ICustomerInformationProps) => {
       );
       setWards(data);
     };
-    fetchWards();
+    if (deliveryAddress.districtId) fetchWards();
   }, [deliveryAddress.districtId]);
   return (
     <>

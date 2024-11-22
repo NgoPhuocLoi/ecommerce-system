@@ -10,7 +10,7 @@ export const getProvinces = async (): Promise<Province[]> => {
 
 export const getDistrictsByProvinceId = async (provinceId: number) => {
   const res = await fetch(`${ADDRESS_API}/districts?provinceId=${provinceId}`);
-
+  console.log({ res });
   return extractMetadataFromResponseClientSide(res, []);
 };
 
