@@ -22,7 +22,7 @@ const Navigation = () => {
   return (
     <div className="flex flex-col gap-4 ">
       {LINKS.map((link) => {
-        const isActive = pathname === link.path;
+        const isActive = pathname.includes(link.path);
         return (
           <Link
             href={link.path}
