@@ -9,5 +9,6 @@ export const UPLOADED_CONTENT_API = `${BACKEND_BASE_URL}/uploaded-images`;
 export const ONLINE_SHOP_API = `${BACKEND_BASE_URL}/online-shop`;
 export const ADDRESS_API = `${BACKEND_BASE_URL}/addresses`;
 export const CUSTOMER_API = `${BACKEND_BASE_URL}/customers`;
+export const SHIPPING_API = `${BACKEND_BASE_URL}/shipping`;
 
 export const DEFAULT_LAYOUT = "defaultLayout";

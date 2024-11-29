@@ -37,7 +37,7 @@ const ProductImages = ({ images }: IProductImagesProps) => {
           </div>
         ))}
       </div>
-      <div>
+      <div className="w-full">
         <Image
           alt="product images"
           src={images[selectedImageIndex]?.url ?? ""}

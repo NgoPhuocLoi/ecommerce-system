@@ -31,11 +31,6 @@ const ProductDetail = ({ product }: IProductDetailProps) => {
   );
 
   const currentVairant = useMemo(() => {
-    console.log({
-      selectedValueIds,
-      variants: product.variants,
-      map: attributeIdToIndexMap.current,
-    });
     return product.variants?.find((variant) => {
       return variant.attributesInfo?.every(
         (attr) =>

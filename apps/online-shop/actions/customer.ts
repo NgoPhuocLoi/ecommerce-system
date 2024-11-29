@@ -52,8 +52,6 @@ export const getCurrentCustomerProfile = async () => {
     needAuth: true,
   });
 
-  console.log({ res });
-
   return await extractMetadataFromResponse(res);
 };
 

@@ -30,7 +30,7 @@ export const RenderEditor = ({
 }) => {
   useEffect(() => {
     if (jsonLayout) {
-      console.log({ jsonLayout });
+      // console.log({ jsonLayout });
       // actions.deserialize(jsonLayout);
     }
   }, [jsonLayout]);
@@ -105,7 +105,6 @@ const EditorBody = ({
       //   } else {
       res = await getPageLayout(foundPage!.id);
       //   }
-      console.log({ res });
       if (!res.layout) {
         setJson(lz.decompressFromBase64(""));
         setLoading(false);

@@ -27,7 +27,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@repo/ui/components/ui/sheet";
-// import logo from "@repo/ui/public/images/logo.png";
+import logoPng from "@repo/common/images/logo.png";
 import Image from "next/image";
 import { ReactNode } from "react";
 import AdminSidebar from "./_components/admin-sidebar";
@@ -46,7 +46,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
               href="/dashboard"
               className="flex items-center gap-2 font-semibold"
             >
-              <Image src={""} alt="Logo" width={40} height={40} />
+              <Image src={logoPng} alt="Logo" width={40} height={40} />
               <span className="">Admin Dashboard</span>
             </Link>
             <Button variant="outline" size="icon" className="ml-auto h-8 w-8">

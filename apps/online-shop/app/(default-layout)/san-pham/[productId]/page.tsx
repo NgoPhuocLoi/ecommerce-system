@@ -17,7 +17,6 @@ const Page = async ({ params }: { params: { productId: string } }) => {
     return null;
   }
 
-  console.log({ product });
   return (
     <>
       <div className="pt-7 container h-full min-h-[calc(100vh-56px)]">

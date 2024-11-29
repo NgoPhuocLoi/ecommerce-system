@@ -6,6 +6,8 @@ import { Circle, CircleDot } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import clsx from "clsx";
+import { useAtom } from "jotai";
+import { orderAtom } from "../../../../atom/order";
 
 const imageMapping: {
   [key: number]: string;
@@ -15,7 +17,7 @@ const imageMapping: {
 };
 
 const CartPayment = () => {
-  const [selectedPaymentId, setSelectedPaymentId] = useState<number>(1);
+  const [order, setOrder] = useAtom(orderAtom);
   return (
     <div className="flex flex-col gap-2">
       <h1 className="text-2xl font-bold">Hình thức thanh toán</h1>
@@ -23,16 +25,22 @@ const CartPayment = () => {
       <div className="flex flex-col gap-4">
         {PAYMENT_METHODS.map((payment) => (
           <div
-            onClick={() => setSelectedPaymentId(payment.id)}
+            onClick={() =>
+              setOrder((prev: any) => ({
+                ...prev,
+                paymentMethodId: payment.id,
+              }))
+            }
             key={payment.id}
             className={clsx(
               "px-4 py-2 border rounded-lg flex gap-4 items-center cursor-pointer",
               {
-                "bg-gray-100 border-black": selectedPaymentId === payment.id,
+                "bg-gray-100 border-black":
+                  order.paymentMethodId === payment.id,
               },
             )}
           >
-            {selectedPaymentId === payment.id ? (
+            {order.paymentMethodId === payment.id ? (
               <CircleDot size={20} />
             ) : (
               <Circle size={20} />

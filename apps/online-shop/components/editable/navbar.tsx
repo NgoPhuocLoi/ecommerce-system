@@ -46,7 +46,6 @@ export const Navbar = () => {
           params.append("pageId", page.id.toString());
 
           const urlToNavigate = `.${page.link}`;
-          console.log({ urlToNavigate });
           return (
             <Link
               key={page.id}

@@ -18,8 +18,7 @@ import AddressForm from "./address-form";
 import RadioQuestions from "./radio-question";
 import ThingToSellQuestion from "./thing-to-sell-question";
 import { Province } from "@repo/common/interfaces/address";
-
-const NUMBER_OF_QUESTIONS = 5;
+import { useRouter } from "next/navigation";
 
 interface QuestionData {
   index: number;
@@ -67,11 +66,21 @@ interface IOnboardingQuestionsProps {
   provinces: Province[];
 }
 
+const LoadingOverlay = () => {
+  return (
+    <div className="absolute inset-0 bg-white bg-opacity-50 flex items-center justify-center flex-col gap-6">
+      <p>Cửa hàng của bạn đang được tạo, vui lòng đợi!</p>
+      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+    </div>
+  );
+};
+
 const OnboardingQuestions = ({
   categories,
   provinces,
 }: IOnboardingQuestionsProps) => {
   const [question, setQuestion] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
     null,
   );
@@ -93,6 +102,7 @@ const OnboardingQuestions = ({
   const percentageComplete = useMemo(() => {
     return Math.ceil((question * 100) / VIETNAMESE_QUESTIONS.length);
   }, [question]);
+  const router = useRouter();
 
   const handleCreateShop = async () => {
     const data = {
@@ -104,8 +114,10 @@ const OnboardingQuestions = ({
       ...addressInformation,
     };
     // console.log({ data });
+    setLoading(true);
     const res = await createShop(data);
-
+    setLoading(false);
+    router.push(`/dashboard`);
     console.log({ res });
   };
 
@@ -215,6 +227,8 @@ const OnboardingQuestions = ({
           </Card>
         </div>
       )}
+
+      {loading && <LoadingOverlay />}
     </>
   );
 };

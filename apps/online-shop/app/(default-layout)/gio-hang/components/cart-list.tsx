@@ -14,6 +14,7 @@ import { CartResponse } from "../../../../interfaces/cart";
 import CartItem from "./cart-item";
 import { useAtom } from "jotai";
 import { cartCountAtom } from "../../../../atom/cart";
+import { orderAtom } from "../../../../atom/order";
 
 const SkeletonLoading = () => {
   return [1, 2, 3].map((_, index) => (
@@ -37,6 +38,7 @@ const SkeletonLoading = () => {
 };
 
 const CartList = () => {
+  const [order] = useAtom(orderAtom);
   const [cartItems, setCartItems] = useState<CartResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const [, setCountCart] = useAtom(cartCountAtom);
@@ -46,12 +48,12 @@ const CartList = () => {
     }, 0);
   }, [cartItems]);
   const discountPrice = 0;
-  const shippingPrice = 0;
 
   useEffect(() => {
     const fetchCart = async () => {
       setLoading(true);
       const items = await retrieveCart();
+      console.log({ items });
       setCartItems(items);
       setLoading(false);
     };
@@ -143,7 +145,7 @@ const CartList = () => {
 
         <div className="flex justify-between">
           <Label className="">Phí vận chuyển</Label>
-          <h2 className=" text-right">{formatCurrency(shippingPrice)}</h2>
+          <h2 className=" text-right">{formatCurrency(order.shippingFee)}</h2>
         </div>
 
         <Separator />
@@ -151,12 +153,21 @@ const CartList = () => {
         <div className="flex justify-between">
           <Label className="text-lg font-bold">Tổng cộng</Label>
           <h2 className=" text-right font-bold">
-            {formatCurrency(totalPrice + shippingPrice - discountPrice)}
+            {formatCurrency(totalPrice + order.shippingFee - discountPrice)}
           </h2>
         </div>
       </div>
 
-      {cartItems.length > 0 && <Button className="mt-6">Thanh toán</Button>}
+      {cartItems.length > 0 && (
+        <Button
+          onClick={() => {
+            console.log({ order });
+          }}
+          className="mt-6"
+        >
+          Thanh toán
+        </Button>
+      )}
     </>
   );
 };

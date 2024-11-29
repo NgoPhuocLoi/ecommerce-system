@@ -20,7 +20,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const currentCustomer = await getCurrentCustomerProfile();
-  console.log({ currentCustomer });
   return (
     <html lang="en">
       <body className={inter.className}>

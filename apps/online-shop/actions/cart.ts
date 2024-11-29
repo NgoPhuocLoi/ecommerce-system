@@ -22,8 +22,6 @@ export const addToCart = async ({
     needAuth: true,
   });
 
-  console.log({ res });
-
   return await extractMetadataFromResponse(res);
 };
 

@@ -30,7 +30,7 @@ const Page = async ({
         isAdminBuilder
         pages={theme.defaultPages}
         products={[]}
-        returnLink="/admin/themes"
+        returnLink="/themes"
         defaultHeaderLayout={theme.defaultHeaderLayout}
         defaultFooterLayout={theme.defaultFooterLayout}
       />

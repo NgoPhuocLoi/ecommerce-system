@@ -42,7 +42,7 @@ const Page = async ({ params }: { params: { themeId: string } }) => {
         <div className="flex items-center justify-between">
           <h1 className="flex items-center gap-1 text-lg font-semibold md:text-2xl">
             <Button asChild type="button" variant={"ghost"} size={"icon"}>
-              <Link href={"/admin/themes"}>
+              <Link href={"/themes"}>
                 <ChevronLeft />
               </Link>
             </Button>

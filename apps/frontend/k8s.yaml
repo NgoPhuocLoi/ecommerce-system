@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce-system-frontend-deployment
+  labels:
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: frontend
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+        - name: ecommerce-system-frontend-deployment-container
+          image: ngophuocloi/test-turbo-frontend:v2
+          ports:
+            - containerPort: 3000
+          envFrom:
+          - secretRef:
+              name:  ecommerce-system-frontend-secret
+          resources:
+            requests:
+              cpu: 100m
+            limits:
+              cpu: 100m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecommerce-system-frontend-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 3000
+  selector:
+    tier: frontend

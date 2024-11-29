@@ -11,6 +11,7 @@ import { Label } from "./label";
 
 interface ITextSelectionProps {
   defaultValue?: string;
+  value?: string;
   onValueChange: (value: string) => void;
   options: Record<string, any>[];
   displayField: string;
@@ -22,6 +23,7 @@ interface ITextSelectionProps {
 
 const TextSelection = ({
   defaultValue,
+  value,
   onValueChange,
   options,
   displayField,
@@ -37,6 +39,7 @@ const TextSelection = ({
         disabled={disabled}
         defaultValue={defaultValue}
         onValueChange={onValueChange}
+        value={value}
       >
         <SelectTrigger className="extractMetadataFromResponseClientSide">
           <SelectValue placeholder={placeholder} />

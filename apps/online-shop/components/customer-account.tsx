@@ -53,8 +53,8 @@ const CustomerAccount = ({ currentCustomer }: ICustomerAccountProps) => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="h-full w-full">
-          <Link href="/profile" className="h-full w-full">
-            Hồ sơ
+          <Link href="/tai-khoan/thong-tin" className="h-full w-full">
+            Tài khoản
           </Link>
         </DropdownMenuItem>
 

@@ -24,7 +24,6 @@ const OnlineShopView = ({
 }: IOnlineShopViewProps) => {
   useHydrateAtoms([[pagesAtom, pages]]);
   useHydrateAtoms([[productsAtom, products]]);
-  console.log({ pages });
   return (
     <div>
       <Editor

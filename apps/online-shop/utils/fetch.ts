@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 export const getShopIdFromShopDomain = async (domain: string) => {
   const res = await fetch(`${SHOP_API}/domain/${domain}`);
   const data = await res.json();
-  console.log({ data });
+  // console.log({ data });
   return data.metadata?.id;
 };
 
@@ -14,12 +14,14 @@ export const tenantSpecificFetch = async ({
   body,
   needAuth,
   skipCache,
+  tag,
 }: {
   url: string;
   method: string;
-  body?: Record<string, string | number>;
+  body?: Record<string, string | number | boolean>;
   needAuth?: boolean;
   skipCache?: true;
+  tag?: string;
 }) => {
   const shopHost = cookies().get("shop");
   const shopDomain = shopHost?.value.split(".")[0];
@@ -30,11 +32,11 @@ export const tenantSpecificFetch = async ({
   };
   if (needAuth) {
     const token = cookies().get("token")?.value;
-    console.log({ tokenInheader: token });
+    // console.log({ tokenInheader: token });
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  console.log({ headers });
+  // console.log({ headers });
 
   const options: RequestInit = {
     method,
@@ -44,6 +46,10 @@ export const tenantSpecificFetch = async ({
 
   if (skipCache) {
     options.cache = "no-cache";
+  }
+
+  if (tag && options.next) {
+    options.next.tags = [tag];
   }
   return fetch(url, options);
 };

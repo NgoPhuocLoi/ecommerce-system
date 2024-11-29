@@ -1,21 +1,27 @@
 import { getProvinces } from "@repo/common/actions/address";
 
-import { Button } from "@repo/ui/components/ui/button";
 import { Separator } from "@repo/ui/components/ui/separator";
+import { getDeliveryAddresses } from "../../../actions/delivery-address";
 import RequireLoginWrapper from "../../../components/required-login-wrapper";
 import CartList from "./components/cart-list";
 import CartPayment from "./components/cart-payment";
-import CartPrice from "./components/cart-price";
 import CustomerInformation from "./components/customer-information";
 
 const Page = async () => {
-  const provinces = await getProvinces();
+  const [provinces, addresses] = await Promise.all([
+    getProvinces(),
+    getDeliveryAddresses(),
+  ]);
+
   return (
     <RequireLoginWrapper>
       <div className="container pb-[60px]">
         <div className="grid grid-cols-7 gap-8 mt-8">
           <div className=" col-span-4 flex flex-col gap-8">
-            <CustomerInformation provinces={provinces} />
+            <CustomerInformation
+              provinces={provinces}
+              deliveryAddresses={addresses}
+            />
 
             <Separator className="my-2" />
 

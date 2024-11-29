@@ -8,7 +8,6 @@ export default async function Home() {
     getPages(),
     getOnlineShop(),
   ]);
-  console.log({ products, pages, onlineShop });
   return (
     <OnlineShopView
       products={products}

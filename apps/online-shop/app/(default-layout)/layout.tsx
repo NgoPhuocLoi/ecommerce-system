@@ -11,7 +11,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
     getOnlineShop(),
     countCartItems(),
   ]);
-
+  console.log({ countCart });
   return (
     <div>
       <LayoutWrapper
