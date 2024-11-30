@@ -24,11 +24,22 @@ export interface OrderRepsonse {
   updatedAt: string;
   totalItems: number;
   orderPreview: OrderPreview;
+  payment: Payment;
 }
 
 export interface AddressInOrder extends DeliveryAddress {
   customerName: string;
   email: string;
+}
+
+export interface Payment {
+  paymentId: number;
+  amount: number;
+  paymentStatusId: number;
+  paymentMethodId: number;
+  orderId: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface OrderDetail extends OrderRepsonse {

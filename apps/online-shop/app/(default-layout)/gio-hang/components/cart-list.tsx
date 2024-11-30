@@ -15,6 +15,10 @@ import CartItem from "./cart-item";
 import { useAtom } from "jotai";
 import { cartCountAtom } from "../../../../atom/cart";
 import { orderAtom } from "../../../../atom/order";
+import { ICreateOrder } from "../../../../interfaces/order";
+import { toast } from "sonner";
+import { createOrder } from "../../../../actions/order";
+import { useRouter } from "next/navigation";
 
 const SkeletonLoading = () => {
   return [1, 2, 3].map((_, index) => (
@@ -37,10 +41,17 @@ const SkeletonLoading = () => {
   ));
 };
 
-const CartList = () => {
+interface ICartListProps {
+  selectedAddressId?: number;
+  selectedPaymentId: number;
+}
+
+const CartList = ({ selectedAddressId, selectedPaymentId }: ICartListProps) => {
   const [order] = useAtom(orderAtom);
   const [cartItems, setCartItems] = useState<CartResponse[]>([]);
   const [loading, setLoading] = useState(false);
+  const [creatingOrder, setCreatingOrder] = useState(false);
+  const router = useRouter();
   const [, setCountCart] = useAtom(cartCountAtom);
   const totalPrice = useMemo(() => {
     return cartItems.reduce((acc, item) => {
@@ -48,6 +59,34 @@ const CartList = () => {
     }, 0);
   }, [cartItems]);
   const discountPrice = 0;
+
+  const shouldDisabledCreateOrderButton = useMemo(() => {
+    return !selectedAddressId || !selectedPaymentId;
+  }, [selectedAddressId, selectedPaymentId]);
+
+  const handleCreateOrder = async () => {
+    if (!selectedAddressId) {
+      return;
+    }
+    const preparedOrderData: ICreateOrder = {
+      totalDiscount: discountPrice,
+      totalPrice,
+      shippingFee: order.shippingFee,
+      finalPrice: totalPrice + order.shippingFee - discountPrice,
+      deliveryAddressId: selectedAddressId,
+      paymentMethodId: selectedPaymentId,
+    };
+
+    setCreatingOrder(true);
+    const createdOrder = await createOrder(preparedOrderData);
+    if (createdOrder.order_id) {
+      toast.success("Đặt hàng thành công");
+      router.push(`/tai-khoan/don-hang/${createdOrder.order_id}`);
+    } else {
+      toast.error("Đặt hàng thất bại");
+    }
+    setCreatingOrder(false);
+  };
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -160,12 +199,11 @@ const CartList = () => {
 
       {cartItems.length > 0 && (
         <Button
-          onClick={() => {
-            console.log({ order });
-          }}
+          onClick={handleCreateOrder}
           className="mt-6"
+          disabled={shouldDisabledCreateOrderButton || creatingOrder}
         >
-          Thanh toán
+          {creatingOrder ? "..." : "Thanh toán"}
         </Button>
       )}
     </>

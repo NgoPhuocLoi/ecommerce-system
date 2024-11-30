@@ -1,18 +1,24 @@
-import { Badge } from "@repo/ui/components/ui/badge";
-import React from "react";
-import OrderItem from "./order-item";
-import { Button } from "@repo/ui/components/ui/button";
 import { formatCurrency } from "@repo/common/utils/currency-format";
-import { OrderRepsonse } from "../../../../../interfaces/order";
+import { OrderStatusChip } from "@repo/ui/components/ui/order-status-chip";
+import { PaymentStatusChip } from "@repo/ui/components/ui/payment-status-chip";
 import { DateTime } from "luxon";
 import Image from "next/image";
 import Link from "next/link";
+import { useMemo } from "react";
+import { OrderRepsonse } from "../../../../../interfaces/order";
+import PaymentButotn from "./payment-button";
 
 interface IOrderCardProps {
   order: OrderRepsonse;
 }
 
 const OrderCard = ({ order }: IOrderCardProps) => {
+  const shouldShowPaymentButton = useMemo(() => {
+    return (
+      order.payment.paymentStatusId !== 2 && order.payment.paymentMethodId === 2
+    );
+  }, [order.currentStatusId, order.payment.paymentMethodId]);
+
   return (
     <Link
       href={`/tai-khoan/don-hang/${order.orderId}`}
@@ -27,8 +33,12 @@ const OrderCard = ({ order }: IOrderCardProps) => {
             </p>
           </div>
 
-          <div>
-            <Badge variant={"secondary"}>{order.currentStatus}</Badge>
+          <div className="text-black flex gap-2">
+            <OrderStatusChip statusId={order.currentStatusId} />
+
+            {order.payment.paymentMethodId === 2 && (
+              <PaymentStatusChip statusId={order.payment.paymentStatusId} />
+            )}
           </div>
         </div>
       </div>
@@ -54,8 +64,10 @@ const OrderCard = ({ order }: IOrderCardProps) => {
       </div>
 
       <div className="px-10 py-2 flex justify-between items-center">
-        <Button className="rounded-full">Thanh toán</Button>
-        <p>
+        {shouldShowPaymentButton && (
+          <PaymentButotn orderId={order.orderId} amount={order.finalPrice} />
+        )}
+        <p className="ml-auto py-2">
           Tổng tiền ({order.totalItems} món):{" "}
           <span className="font-bold">{formatCurrency(order.finalPrice)}</span>
         </p>

@@ -16,8 +16,15 @@ const imageMapping: {
   2: payment02Png.src,
 };
 
-const CartPayment = () => {
-  const [order, setOrder] = useAtom(orderAtom);
+interface ICartPaymentProps {
+  selectedPaymentId: number;
+  setSelectedPaymentId: (id: number) => void;
+}
+
+const CartPayment = ({
+  selectedPaymentId,
+  setSelectedPaymentId,
+}: ICartPaymentProps) => {
   return (
     <div className="flex flex-col gap-2">
       <h1 className="text-2xl font-bold">Hình thức thanh toán</h1>
@@ -25,22 +32,16 @@ const CartPayment = () => {
       <div className="flex flex-col gap-4">
         {PAYMENT_METHODS.map((payment) => (
           <div
-            onClick={() =>
-              setOrder((prev: any) => ({
-                ...prev,
-                paymentMethodId: payment.id,
-              }))
-            }
+            onClick={() => setSelectedPaymentId(payment.id)}
             key={payment.id}
             className={clsx(
               "px-4 py-2 border rounded-lg flex gap-4 items-center cursor-pointer",
               {
-                "bg-gray-100 border-black":
-                  order.paymentMethodId === payment.id,
+                "bg-gray-100 border-black": selectedPaymentId === payment.id,
               },
             )}
           >
-            {order.paymentMethodId === payment.id ? (
+            {selectedPaymentId === payment.id ? (
               <CircleDot size={20} />
             ) : (
               <Circle size={20} />

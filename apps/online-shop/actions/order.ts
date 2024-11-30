@@ -6,8 +6,18 @@ import {
   extractMetadataFromResponse,
   tenantSpecificFetch,
 } from "../utils/fetch";
+import { revalidateTag } from "next/cache";
 
-export const createOrder = async (order: ICreateOrder) => {};
+export const createOrder = async (order: ICreateOrder) => {
+  const res = await tenantSpecificFetch({
+    method: "POST",
+    url: `${CUSTOMER_API}/orders`,
+    body: { ...order },
+    needAuth: true,
+  });
+  revalidateTag("orders");
+  return await extractMetadataFromResponse(res, {});
+};
 
 export const getOrders = async (): Promise<OrderRepsonse[]> => {
   const res = await tenantSpecificFetch({

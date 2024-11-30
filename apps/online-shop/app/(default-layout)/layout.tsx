@@ -3,6 +3,7 @@ import LayoutWrapper from "./layout-wrapper";
 import { getProducts } from "../../actions/product";
 import { getOnlineShop, getPages } from "../../actions/online-shop";
 import { countCartItems } from "../../actions/cart";
+import { Toaster } from "@repo/ui/components/ui/sonner";
 
 const Layout = async ({ children }: { children: ReactNode }) => {
   const [products, pages, onlineShop, countCart] = await Promise.all([

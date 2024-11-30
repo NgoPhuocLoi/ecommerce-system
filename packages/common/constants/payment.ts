@@ -10,3 +10,10 @@ export const PAYMENT_METHODS = [
     description: "Thanh toán qua VNPay",
   },
 ];
+
+export const PAYMENT_METHOD_ID_MAPPING: {
+  [key: number]: string;
+} = {
+  1: "Thanh toán khi nhận hàng (COD)",
+  2: "Thanh toán qua VNPay",
+};
