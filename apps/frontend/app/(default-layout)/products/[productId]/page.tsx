@@ -15,7 +15,6 @@ const Page = async ({ params }: IProductDetailPage) => {
     return redirect("/auth/login");
   }
 
-  console.log({ product });
   return (
     <div>
       <ProductForm title="Edit product" product={product} badgeLabel={"Test"} />

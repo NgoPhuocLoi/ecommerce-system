@@ -26,10 +26,12 @@ export const tenantSpecificFetch = async ({
   url,
   method,
   body,
+  tag,
 }: {
   url: string;
   method: string;
   body?: any;
+  tag?: string;
 }) => {
   const token = await (await auth()).getToken();
   const selectedShopId = cookies().get("selectedShopId");
@@ -38,7 +40,8 @@ export const tenantSpecificFetch = async ({
     console.log("HEREEEE");
     return redirect("/sign-in");
   }
-  return fetch(url, {
+
+  const option: RequestInit = {
     method,
     headers: {
       Authorization: `Bearer ${token}`,
@@ -46,7 +49,15 @@ export const tenantSpecificFetch = async ({
       "x-shop-id": selectedShopId.value,
     },
     body: JSON.stringify(body),
-  });
+  };
+
+  if (tag) {
+    option.next = {
+      tags: [tag],
+    };
+  }
+
+  return fetch(url, option);
 };
 
 export const extractMetadataFromResponse = async (

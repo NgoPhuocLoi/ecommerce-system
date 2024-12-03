@@ -11,7 +11,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 RUN npm install -g turbo
 COPY . .
-RUN turbo prune frontend --docker
+RUN turbo prune online-shop --docker
 
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
@@ -45,12 +45,12 @@ USER nextjs
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=installer --chown=nextjs:nodejs /app/apps/frontend/.next/standalone ./
-COPY --from=installer --chown=nextjs:nodejs /app/apps/frontend/.next/static ./apps/frontend/.next/static
-# COPY --from=installer --chown=nextjs:nodejs /app/apps/frontend/public ./apps/frontend/public
+COPY --from=installer --chown=nextjs:nodejs /app/apps/online-shop/.next/standalone ./
+COPY --from=installer --chown=nextjs:nodejs /app/apps/online-shop/.next/static ./apps/online-shop/.next/static
+# COPY --from=installer --chown=nextjs:nodejs /app/apps/online-shop/public ./apps/online-shop/public
 
-EXPOSE 3000
+EXPOSE 3001
 
-ENV PORT 3000
+ENV PORT 3001
 
-CMD HOSTNAME="0.0.0.0" node apps/frontend/server.js
+CMD HOSTNAME="0.0.0.0" node apps/online-shop/server.js

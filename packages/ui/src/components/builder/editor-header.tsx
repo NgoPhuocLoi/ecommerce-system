@@ -101,16 +101,16 @@ const EditorHeader = ({
             >
               {enabled ? <Eye className="h-5" /> : <EyeOff className="h-5" />}
             </div>
-            <div className="cursor-pointer rounded-md px-1 py-2 hover:bg-gray-100">
+            {/* <div className="cursor-pointer rounded-md px-1 py-2 hover:bg-gray-100">
               <Undo2 className="h-5" />
             </div>
             <div className="cursor-pointer rounded-md px-1 py-2 hover:bg-gray-100">
               <Redo2 className="h-5 cursor-pointer" />
-            </div>
+            </div> */}
           </div>
           <Button disabled={loading} onClick={handleSave}>
             {" "}
-            {loading ? "Updating...." : "Save"}
+            {loading ? "Đang lưu...." : "Lưu"}
           </Button>
         </div>
       )}

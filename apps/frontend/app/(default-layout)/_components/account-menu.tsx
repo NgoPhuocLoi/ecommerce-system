@@ -17,7 +17,6 @@ import SignOutBtn from "./sign-out-btn";
 const AccountMenu = async () => {
   const user = await currentUser();
   const { getToken } = await auth();
-  console.log({ token: await getToken() });
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

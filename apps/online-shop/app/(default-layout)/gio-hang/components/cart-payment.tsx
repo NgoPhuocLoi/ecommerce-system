@@ -1,5 +1,8 @@
 "use client";
-import { PAYMENT_METHODS } from "@repo/common/constants/payment";
+import {
+  PAYMENT_METHOD_ID_MAPPING,
+  PAYMENT_METHODS,
+} from "@repo/common/constants/payment";
 import payment01Png from "@repo/common/images/payment-01.png";
 import payment02Png from "@repo/common/images/payment-02.png";
 import { Circle, CircleDot } from "lucide-react";
@@ -52,7 +55,9 @@ const CartPayment = ({
               height={44}
               alt="Payment logo"
             />
-            <h2 className="font-bold">Thanh toán khi nhận hàng</h2>
+            <h2 className="font-bold">
+              {PAYMENT_METHOD_ID_MAPPING[payment.id]}
+            </h2>
           </div>
         ))}
       </div>

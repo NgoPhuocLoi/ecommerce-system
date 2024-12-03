@@ -36,7 +36,7 @@ interface IOrderStatusChipProps {
 export const OrderStatusChip = ({ statusId }: IOrderStatusChipProps) => {
   return (
     <div
-      className={clsx(`border px-2 py-1 text-sm rounded-md `, {
+      className={clsx(`border px-2 py-1 text-sm rounded-md w-fit`, {
         "text-white": statusId !== 1,
       })}
       style={{

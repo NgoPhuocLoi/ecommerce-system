@@ -37,19 +37,16 @@ const CategoryList = ({
 
   useEffect(() => {
     if (initialCategory) {
-      console.log({ initialCategory });
       handleLoadSubCategory(initialCategory.parent_id);
     }
   }, [initialCategory]);
 
   const handleLoadSubCategory = async (parentId: number) => {
-    console.log("HERE");
     setPreviousParents((prev) => [
       ...prev,
       parentCategory !== null ? parentCategory : null,
     ]);
     const res = (await getSubCategories(parentId)).metadata;
-    console.log({ res });
     setParentCategory(
       displayedCategories.find((category) => category.id === parentId) ?? null,
     );
@@ -83,7 +80,6 @@ const CategoryList = ({
           const selectedCategory = displayedCategories.find(
             (category) => category.id === Number(value),
           );
-          console.log({ selectedCategory, displayedCategories });
           setSelectedCategory(selectedCategory);
         }}
         name="categoryId"

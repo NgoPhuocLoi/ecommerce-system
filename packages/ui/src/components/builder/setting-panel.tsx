@@ -84,7 +84,7 @@ const SettingPanel = () => {
                   }}
                 >
                   <Copy className="mr-2 h-4 w-4" />
-                  <span>Duplicate</span>
+                  <span>Nhân bản</span>
                 </DropdownMenuItem>
 
                 <DropdownMenuItem
@@ -94,7 +94,7 @@ const SettingPanel = () => {
                   className="text-red-500 hover:!text-red-500"
                 >
                   <Trash className="mr-2 h-4 w-4" />
-                  <span>Delete</span>
+                  <span>Xóa</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

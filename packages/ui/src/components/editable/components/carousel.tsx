@@ -57,7 +57,7 @@ export const CarouselSetting = () => {
                 ...slides,
                 {
                   id: v4(),
-                  title: "New Slide",
+                  title: "Trang mới",
                   description: "",
                   button: "Shop now",
                   link: "",
@@ -97,7 +97,7 @@ export const CarouselSetting = () => {
                   height={40}
                 />
               </div>
-              <div className="text-sm">Slide {index + 1}</div>
+              <div className="text-sm">Trang {index + 1}</div>
               <EllipsisVertical className="ml-auto" size={16} />
             </div>
           ))}
@@ -110,7 +110,7 @@ export const CarouselSetting = () => {
       >
         <div className="flex flex-col gap-4">
           <InputSetting
-            title="Title"
+            title="Tiêu đề"
             value={selectedSlide.title}
             onChange={(value) => {
               handlePropChange(
@@ -245,9 +245,9 @@ Carousel.craft = {
     slides: [
       {
         id: v4(),
-        title: "Carousel Title 1",
+        title: "Tiêu đề Carousel 1",
         description:
-          "Add a description for your carousel slide. You can use this to promote multiple sales.",
+          "Thêm mô tả cho slide của bạn. Bạn có thể sử dụng nó để quảng cáo nhiều khuyến mãi.",
         button: "Shop now",
         link: "",
         imageUrl:
@@ -255,19 +255,9 @@ Carousel.craft = {
       },
       {
         id: v4(),
-        title: "Carousel Title 2",
+        title: "Tiêu đề Carousel 2",
         description:
-          "Add a description for your carousel slide. You can use this to promote multiple sales.",
-        button: "Shop now",
-        link: "",
-        imageUrl:
-          "https://images.unsplash.com/photo-1517840600399-c7c2ff4c0fb5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
-      },
-      {
-        id: v4(),
-        title: "Carousel Title 3",
-        description:
-          "Add a description for your carousel slide. You can use this to promote multiple sales.",
+          "Thêm mô tả cho slide của bạn. Bạn có thể sử dụng nó để quảng cáo nhiều khuyến mãi.",
         button: "Shop now",
         link: "",
         imageUrl:

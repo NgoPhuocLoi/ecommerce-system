@@ -24,7 +24,6 @@ interface IProductFormProps {
 const ProductForm = ({ badgeLabel, title, product }: IProductFormProps) => {
   const handleCreateNewProduct = async (formData: FormData) => {
     "use server";
-    console.log(formData);
     const attributes = JSON.parse(formData.get("attributes") as string) ?? [];
     const attributesToSubmit = attributes.map((attr: VariantOption) => {
       const filterPredicate = (
@@ -56,13 +55,7 @@ const ProductForm = ({ badgeLabel, title, product }: IProductFormProps) => {
       variants,
     };
 
-    console.log(dataToSubmit);
-    console.log(attributesToSubmit[0].values);
-    console.log(variants[0].attributesInfo);
-
-    // console.log({ images });
     const res = await createProduct(dataToSubmit);
-    console.log(res);
     revalidatePath("/products");
     redirect("/products/");
   };

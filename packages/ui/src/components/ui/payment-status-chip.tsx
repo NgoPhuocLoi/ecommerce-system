@@ -28,7 +28,7 @@ interface IPaymentStatusChipProps {
 export const PaymentStatusChip = ({ statusId }: IPaymentStatusChipProps) => {
   return (
     <div
-      className={clsx(`border px-2 py-1 text-sm rounded-md text-white`)}
+      className={clsx(`border px-2 py-1 text-sm rounded-md text-white w-fit`)}
       style={{
         backgroundColor: PAYMENT_STATUS_ID_MAPPING[statusId]?.color,
         // opacity: 0.8,

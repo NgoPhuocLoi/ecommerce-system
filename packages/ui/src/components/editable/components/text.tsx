@@ -44,22 +44,22 @@ export const TextSetting = () => {
     <div className="flex flex-col gap-4">
       <InputSetting
         id="shop-common-text-content"
-        title="Content"
+        title="Nội dung"
         value={content}
         onChange={(value) => {
           handlePropChange("content", value);
         }}
-        description="Change the text content"
+        description="Nội dung của text"
       />
       <TabSelectionSetting
         id="shop-common-text"
-        title="Alignment"
-        description="Config the alignment of the text"
+        title="Căn chỉnh văn bản"
+        description="Căn chỉnh văn bản"
         value={textAlign}
         selections={[
-          { title: "Left", value: "left" },
-          { title: "Center", value: "center" },
-          { title: "Right", value: "right" },
+          { title: "Trái", value: "left" },
+          { title: "Giữa", value: "center" },
+          { title: "Phải", value: "right" },
         ]}
         onValueChange={(value) => {
           console.log({ value });
@@ -69,13 +69,13 @@ export const TextSetting = () => {
 
       <TabSelectionSetting
         id="shop-common-text-font-weight"
-        title="Font weight"
-        description="Config the font weight of the text"
+        title="Độ đậm"
+        description="Độ đậm của văn bản"
         value={fontWeight}
         selections={[
-          { title: "Light", value: "300" },
-          { title: "Medium", value: "400" },
-          { title: "Bold", value: "700" },
+          { title: "Nhạt", value: "300" },
+          { title: "Vừa", value: "400" },
+          { title: "Đậm", value: "700" },
         ]}
         onValueChange={(value) => {
           console.log({ value });
@@ -90,18 +90,18 @@ export const TextSetting = () => {
         }}
         value={fontSize}
         id={"shop-common-text-font-size"}
-        title={"Font size"}
-        description={"Change the font size of text"}
+        title={"Cỡ chữ"}
+        description={"Cỡ chữ của văn bản"}
         postfixText="px"
       />
 
       <TabInputSetting
         values={[
-          { title: "Top", value: "top" },
-          { title: "Right", value: "right" },
-          { title: "Bottom", value: "bottom" },
-          { title: "Left", value: "left" },
-          { title: "All", value: "all" },
+          { title: "Trên", value: "top" },
+          { title: "Phải", value: "right" },
+          { title: "Dưới", value: "bottom" },
+          { title: "Trái", value: "left" },
+          { title: "Tất cả", value: "all" },
         ]}
         onValueChange={(value) => {
           let padding = "";
@@ -125,11 +125,11 @@ export const TextSetting = () => {
 
       <TabInputSetting
         values={[
-          { title: "Top", value: "top" },
-          { title: "Right", value: "right" },
-          { title: "Bottom", value: "bottom" },
-          { title: "Left", value: "left" },
-          { title: "All", value: "all" },
+          { title: "Trên", value: "top" },
+          { title: "Phải", value: "right" },
+          { title: "Dưới", value: "bottom" },
+          { title: "Trái", value: "left" },
+          { title: "Tất cả", value: "all" },
         ]}
         onValueChange={(value) => {
           let margin = "";
@@ -153,11 +153,11 @@ export const TextSetting = () => {
 
       <TabInputSetting
         values={[
-          { title: "Top", value: "top" },
-          { title: "Right", value: "right" },
-          { title: "Bottom", value: "bottom" },
-          { title: "Left", value: "left" },
-          { title: "All", value: "all" },
+          { title: "Trên", value: "top" },
+          { title: "Phải", value: "right" },
+          { title: "Dưới", value: "bottom" },
+          { title: "Trái", value: "left" },
+          { title: "Tất cả", value: "all" },
         ]}
         onValueChange={(value) => {
           let borderRadius = "";
@@ -183,16 +183,16 @@ export const TextSetting = () => {
         value={bgColor}
         onChange={(value) => handlePropChange("bgColor", value)}
         id={"shop-common-layout-bgColor"}
-        title={"Background color"}
-        description={"Change the background color of text"}
+        title={"Màu nền"}
+        description={"Thay đổi màu nền"}
       />
 
       <ColorSetting
         value={textColor}
         onChange={(value) => handlePropChange("textColor", value)}
         id={"shop-common-layout-textColor"}
-        title={"Text color"}
-        description={"Change the text color"}
+        title={"Màu chữ"}
+        description={"Thay đổi màu chữ"}
       />
     </div>
   );

@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ecommerce-system-frontend-deployment
+  name: ecommerce-system-admin-deployment
   labels:
-    tier: frontend
+    tier: admin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      tier: frontend
+      tier: admin
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -16,13 +16,13 @@ spec:
   template:
     metadata:
       labels:
-        tier: frontend
+        tier: admin
     spec:
       containers:
-        - name: ecommerce-system-frontend-deployment-container
-          image: ngophuocloi/test-turbo-frontend:v4
+        - name: ecommerce-system-admin-deployment-container
+          image: ngophuocloi/test-turbo-admin:v2
           ports:
-            - containerPort: 3000
+            - containerPort: 3002
           envFrom:
           - secretRef:
               name:  ecommerce-system-frontend-secret
@@ -35,10 +35,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ecommerce-system-frontend-service
+  name: ecommerce-system-admin-service
 spec:
   ports:
     - port: 80
-      targetPort: 3000
+      targetPort: 3002
   selector:
-    tier: frontend
+    tier: admin

@@ -24,6 +24,12 @@ const ELEMEMENTS = [
     hasChildren: true,
   },
   {
+    id: 14,
+    label: "Column",
+    icon: icons.column,
+    component: Column,
+  },
+  {
     id: 2,
     label: "Text",
     icon: icons.text,
@@ -47,36 +53,36 @@ const ELEMEMENTS = [
     icon: icons.carousel,
     component: Carousel,
   },
-  {
-    id: 6,
-    label: "Video",
-    icon: icons.video,
-    component: Layout,
-  },
+  // {
+  //   id: 6,
+  //   label: "Video",
+  //   icon: icons.video,
+  //   component: Layout,
+  // },
   {
     id: 7,
     label: "Product",
     icon: icons.product,
     component: Product,
   },
-  {
-    id: 8,
-    label: "Product Set",
-    icon: icons.productSet,
-    component: Layout,
-  },
+  // {
+  //   id: 8,
+  //   label: "Product Set",
+  //   icon: icons.productSet,
+  //   component: Layout,
+  // },
   {
     id: 9,
     label: "Button",
     icon: icons.button,
     component: Layout,
   },
-  {
-    id: 10,
-    label: "HTML",
-    icon: icons.html,
-    component: Layout,
-  },
+  // {
+  //   id: 10,
+  //   label: "HTML",
+  //   icon: icons.html,
+  //   component: Layout,
+  // },
   {
     id: 11,
     label: "Spacer",
@@ -95,12 +101,7 @@ const ELEMEMENTS = [
     icon: icons.link,
     component: Link,
   },
-  {
-    id: 14,
-    label: "Column",
-    icon: icons.column,
-    component: Column,
-  },
+
   {
     id: 15,
     label: "Navbar",

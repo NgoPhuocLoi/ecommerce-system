@@ -47,18 +47,18 @@ export const links = [
     path: "/analytic",
     iconComponent: ChartArea,
   },
-  {
-    id: 7,
-    title: "Marketing",
-    path: "/marketing",
-    iconComponent: FileChartColumnIncreasing,
-  },
-  {
-    id: 8,
-    title: "Khuyến mãi",
-    path: "/discounts",
-    iconComponent: TicketPercent,
-  },
+  // {
+  //   id: 7,
+  //   title: "Marketing",
+  //   path: "/marketing",
+  //   iconComponent: FileChartColumnIncreasing,
+  // },
+  // {
+  //   id: 8,
+  //   title: "Khuyến mãi",
+  //   path: "/discounts",
+  //   iconComponent: TicketPercent,
+  // },
   {
     id: 9,
     title: "Online shop",

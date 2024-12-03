@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ecommerce-system-frontend-deployment
+  name: ecommerce-system-onlineshop-deployment
   labels:
-    tier: frontend
+    tier: onlineshop
 spec:
   replicas: 1
   selector:
     matchLabels:
-      tier: frontend
+      tier: onlineshop
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -16,13 +16,13 @@ spec:
   template:
     metadata:
       labels:
-        tier: frontend
+        tier: onlineshop
     spec:
       containers:
-        - name: ecommerce-system-frontend-deployment-container
-          image: ngophuocloi/test-turbo-frontend:v4
+        - name: ecommerce-system-onlineshop-deployment-container
+          image: ngophuocloi/test-turbo-online-shop:v1
           ports:
-            - containerPort: 3000
+            - containerPort: 3001
           envFrom:
           - secretRef:
               name:  ecommerce-system-frontend-secret
@@ -35,10 +35,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ecommerce-system-frontend-service
+  name: ecommerce-system-onlineshop-service
 spec:
   ports:
     - port: 80
-      targetPort: 3000
+      targetPort: 3001
   selector:
-    tier: frontend
+    tier: onlineshop
