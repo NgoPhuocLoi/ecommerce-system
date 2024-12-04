@@ -4,6 +4,7 @@ import { getProducts } from "../../actions/product";
 import { getOnlineShop, getPages } from "../../actions/online-shop";
 import { countCartItems } from "../../actions/cart";
 import { Toaster } from "@repo/ui/components/ui/sonner";
+import { notFound } from "next/navigation";
 
 const Layout = async ({ children }: { children: ReactNode }) => {
   const [products, pages, onlineShop, countCart] = await Promise.all([
@@ -12,7 +13,9 @@ const Layout = async ({ children }: { children: ReactNode }) => {
     getOnlineShop(),
     countCartItems(),
   ]);
-  console.log({ countCart });
+  if (!onlineShop[0]) {
+    notFound();
+  }
   return (
     <div>
       <LayoutWrapper

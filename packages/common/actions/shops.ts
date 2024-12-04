@@ -6,10 +6,17 @@ import {
   extractMetadataFromResponse,
 } from "@repo/common/utils/fetch";
 import { auth } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 
 export const getShops = async (accessToken: string) => {
   try {
-    const res = await authenticatedFetch(SHOP_API, "GET", accessToken);
+    const res = await authenticatedFetch(
+      SHOP_API,
+      "GET",
+      accessToken,
+      undefined,
+      "get_shops",
+    );
     return await extractMetadataFromResponse(res, []);
   } catch (error) {
     console.log("[Shop action]: Error when getting shops");
@@ -52,5 +59,7 @@ export const createShop = async (data: {
     return null;
   } catch (error) {
     console.log("[Shop action]: Error when creating shop");
+  } finally {
+    revalidatePath("/");
   }
 };

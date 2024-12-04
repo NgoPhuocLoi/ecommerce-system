@@ -6,9 +6,10 @@ import { Shop } from "./shop-selection";
 
 interface IShopItemProps {
   shop: Shop;
+  email?: string;
 }
 
-const ShopItem = ({ shop }: IShopItemProps) => {
+const ShopItem = ({ shop, email }: IShopItemProps) => {
   const router = useRouter();
 
   const handleSelectShop = async () => {
@@ -28,7 +29,7 @@ const ShopItem = ({ shop }: IShopItemProps) => {
 
       <div className="duration-100 group-hover:translate-x-1">
         <p className="text-sm font-bold">{shop.name}</p>
-        <p className="text-xs">test-store@gmail.com</p>
+        <p className="text-xs">{email}</p>
       </div>
 
       <div className="ml-auto hidden group-hover:block">

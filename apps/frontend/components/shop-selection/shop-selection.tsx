@@ -1,6 +1,6 @@
 // import { getShops } from "@/app/services/shop";
 import ShopList from "./shop-list";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 import {
   Card,
@@ -20,16 +20,17 @@ export interface Shop {
 
 const ShopSelection = async () => {
   const token = await (await auth()).getToken();
+  const user = await currentUser();
   if (!token) {
     return null;
   }
   const shops: Shop[] = (await getShops(token)) || [];
   return (
     <div className="flex h-screen w-screen items-center justify-center py-20">
-      <Card className="h-full w-[476px]">
+      <Card className="h-full w-[600px]">
         <div className="flex items-center justify-between">
           <CardHeader>
-            <CardTitle>Chào mừng bạn, Loi</CardTitle>
+            <CardTitle>Chào mừng bạn, {user?.fullName}</CardTitle>
             <CardDescription>
               Chọn cửa hàng bạn muốn quản lý hoặc tạo cửa hàng mới.
             </CardDescription>

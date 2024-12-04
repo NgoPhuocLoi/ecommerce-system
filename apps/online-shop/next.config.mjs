@@ -39,6 +39,12 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "www.elegantthemes.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   output: "standalone",
