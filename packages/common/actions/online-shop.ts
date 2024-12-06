@@ -5,6 +5,7 @@ import {
   extractMetadataFromResponse,
   tenantSpecificFetch,
 } from "@repo/common/utils/fetch";
+import { extractMetadataFromResponseClientSide } from "../utils/extract-metadata";
 
 export const getPages = async () => {
   const res = await tenantSpecificFetch({
@@ -30,13 +31,33 @@ export const getPageLayout = async (pageId: number) => {
   return await extractMetadataFromResponse(res, {});
 };
 
-export const createPage = async (name: string) => {
+export const createPage = async ({
+  name,
+  layout = "",
+  showInNavigation = true,
+  link,
+  position,
+}: {
+  name: string;
+  layout: string;
+  showInNavigation: boolean;
+  link: string;
+  position: number;
+}) => {
   const res = await tenantSpecificFetch({
     url: `${BACKEND_BASE_URL}/online-shop/pages`,
     method: "POST",
-    body: { name },
+    body: {
+      name,
+      layout,
+      showInNavigation,
+      link,
+      position,
+    },
   });
-  const data = await res.json();
+
+  console.log({ createPageInShop: res });
+  const data = await extractMetadataFromResponseClientSide(res, {});
   return data;
 };
 
@@ -49,6 +70,21 @@ export const updatePage = async (
     method: "PUT",
     body: updatedData,
   });
+  console.log({ updatePage: res });
+  const data = await res.json();
+  return data;
+};
+
+export const updateDefaultLayout = async (updatedData: {
+  defaultHeaderLayout?: string;
+  defaultFooterLayout?: string;
+}) => {
+  const res = await tenantSpecificFetch({
+    url: `${BACKEND_BASE_URL}/online-shop/default-layout`,
+    method: "PUT",
+    body: updatedData,
+  });
+  console.log({ layoutRes: res });
   const data = await res.json();
   return data;
 };

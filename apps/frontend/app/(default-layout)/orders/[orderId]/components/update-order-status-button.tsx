@@ -6,18 +6,24 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@repo/ui/components/ui/alert-dialog";
 import { Button } from "@repo/ui/components/ui/button";
-import React from "react";
 
 interface IUpdateOrderStatusButtonProps {
   order: OrderDetailForShop;
 }
+
+const BUTTON_TITLE_MAPPING: {
+  [key: number]: string;
+} = {
+  1: "Xác nhận đơn hàng",
+  2: "Chuyển đơn hàng",
+  3: "Hoàn thành đơn hàng",
+};
 
 const UpdateOrderStatusButton = ({ order }: IUpdateOrderStatusButtonProps) => {
   const handleUpdateOrderStatus = async () => {
@@ -27,18 +33,15 @@ const UpdateOrderStatusButton = ({ order }: IUpdateOrderStatusButtonProps) => {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button className="w-fit ml-auto" size={"sm"}>
-          Xác nhận đơn hàng
+          {BUTTON_TITLE_MAPPING[order.current_status_id]}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Bạn có chắc xác nhận đơn hàng này không?
+            Bạn có chắc {BUTTON_TITLE_MAPPING[order.current_status_id]} này
+            không?
           </AlertDialogTitle>
-          <AlertDialogDescription>
-            Sau khi xác nhận, đơn hàng sẽ được chuyển sang trạng thái "Đã xác
-            nhận"
-          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Không</AlertDialogCancel>

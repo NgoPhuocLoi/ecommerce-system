@@ -1,14 +1,11 @@
 "use client";
 
 import { OrderForShop } from "@repo/common/interfaces/order";
-import { formatCurrency } from "@repo/common/utils/currency-format";
 import {
   Card,
+  CardContent,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
 } from "@repo/ui/components/ui/card";
 import {
   ChartConfig,
@@ -16,20 +13,11 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@repo/ui/components/ui/chart";
-import { TrendingUp } from "lucide-react";
 import { DateTime } from "luxon";
 import { useMemo } from "react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
-import { NUMBER_OF_MONTHS } from "../page";
 
-const chartData = [
-  { month: "T6", desktop: 3 },
-  { month: "T7", desktop: 5 },
-  { month: "T8", desktop: 11 },
-  { month: "T9", desktop: 4 },
-  { month: "T10", desktop: 0 },
-  { month: "T11", desktop: 5 },
-];
+const NUMBER_OF_MONTHS = 6;
 
 const chartConfig = {
   desktop: {
@@ -54,7 +42,7 @@ export function OrderAnalytic({ orders }: { orders: OrderForShop[] }) {
     const result = [];
 
     for (let i = 0; i < NUMBER_OF_MONTHS; i++) {
-      const month = (endMonth - i + 12) % 12;
+      const month = (endMonth - i + 12) % 12 || 12;
       console.log({ month });
       const numberOfOrders = monthToNumberOfOrdersMap.get(month) ?? 0;
       result.unshift({

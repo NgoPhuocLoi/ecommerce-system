@@ -27,7 +27,7 @@ const Page = async ({
     <div>
       <PageBuilder
         shouldDisplayLayoutEditor={searchParams.pageId === "defaultLayout"}
-        isAdminBuilder
+        isAdminBuilder={true}
         pages={theme.defaultPages}
         products={[]}
         returnLink="/themes"

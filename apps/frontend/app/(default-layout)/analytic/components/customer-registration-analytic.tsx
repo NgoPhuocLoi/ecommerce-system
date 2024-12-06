@@ -3,11 +3,9 @@
 import { CustomerForShop } from "@repo/common/interfaces/customer";
 import {
   Card,
+  CardContent,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
 } from "@repo/ui/components/ui/card";
 import {
   ChartConfig,
@@ -15,20 +13,10 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@repo/ui/components/ui/chart";
-import { TrendingUp } from "lucide-react";
 import { DateTime } from "luxon";
 import { useMemo } from "react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
-import { NUMBER_OF_MONTHS } from "../page";
-
-const chartData = [
-  { month: "T6", desktop: 0 },
-  { month: "T7", desktop: 0 },
-  { month: "T8", desktop: 3 },
-  { month: "T9", desktop: 5 },
-  { month: "T10", desktop: 7 },
-  { month: "T11", desktop: 20 },
-];
+const NUMBER_OF_MONTHS = 6;
 
 const chartConfig = {
   desktop: {
@@ -60,7 +48,7 @@ export function CustomerRegistrationAnalytic({
     const result = [];
 
     for (let i = 0; i < NUMBER_OF_MONTHS; i++) {
-      const month = (endMonth - i + 12) % 12;
+      const month = (endMonth - i + 12) % 12 || 12;
       console.log({ month });
       const numberOfOrders = monthToNumberOfOrdersMap.get(month) ?? 0;
       result.unshift({

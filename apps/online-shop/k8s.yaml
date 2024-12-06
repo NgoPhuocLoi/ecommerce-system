@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: ecommerce-system-onlineshop-deployment-container
-          image: ngophuocloi/test-turbo-online-shop:v1
+          image: ngophuocloi/test-turbo-online-shop:v2-correct-file
           ports:
             - containerPort: 3001
           envFrom:

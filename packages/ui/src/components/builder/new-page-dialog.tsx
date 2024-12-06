@@ -1,10 +1,14 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getPages } from "@repo/common/actions/online-shop";
+import { createPage } from "@repo/common/actions/online-shop";
 import { createPageInTheme } from "@repo/common/actions/themes";
 import { Page } from "@repo/common/interfaces/online-shop";
-import { Button } from "@repo/ui/components/ui/button";
-import { Checkbox } from "@repo/ui/components/ui/checkbox";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@repo/ui/components/ui/dialog";
+} from "../ui/dialog";
 import {
   Form,
   FormControl,
@@ -20,12 +24,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@repo/ui/components/ui/form";
-import { Input } from "@repo/ui/components/ui/input";
-import { useParams } from "next/navigation";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+} from "../ui/form";
+import { Input } from "../ui/input";
 
 const createPageFormSchema = z.object({
   name: z
@@ -38,10 +38,16 @@ const createPageFormSchema = z.object({
 
 interface INewPageDialogProps {
   existingPages: Page[];
+  isAdminBuilder?: boolean;
+  onPageCreated: (page: Page) => void;
 }
 
-const NewPageDialog = ({ existingPages }: INewPageDialogProps) => {
-  const themeId = useParams().themeId as string;
+const NewPageDialog = ({
+  existingPages,
+  isAdminBuilder,
+  onPageCreated,
+}: INewPageDialogProps) => {
+  const themeId = useSearchParams().get("themeId");
   const [openCreateNewPageForm, setOpenCreateNewPageForm] = useState(false);
 
   const form = useForm<z.infer<typeof createPageFormSchema>>({
@@ -62,12 +68,39 @@ const NewPageDialog = ({ existingPages }: INewPageDialogProps) => {
       });
       return;
     }
-    const res = await createPageInTheme(themeId, {
-      name: values.name,
-      link: values.link,
-      showInNavigation: values.showInNavigation,
-    });
-    console.log({ res });
+    if (isAdminBuilder && themeId) {
+      console.log(
+        themeId,
+        {
+          name: values.name,
+          link: values.link,
+          showInNavigation: values.showInNavigation,
+        },
+        themeId,
+      );
+      const newPage = await createPageInTheme(themeId, {
+        name: values.name,
+        link: values.link,
+        showInNavigation: values.showInNavigation,
+      });
+      if (newPage.id) {
+        onPageCreated(newPage);
+      }
+    } else {
+      alert("Create page in shop builder");
+      const newPage = await createPage({
+        name: values.name,
+        link: values.link,
+        showInNavigation: values.showInNavigation,
+        position: existingPages.length,
+        layout: "",
+      });
+
+      if (newPage.id) {
+        onPageCreated(newPage);
+      }
+    }
+
     form.reset();
     setOpenCreateNewPageForm(false);
   };

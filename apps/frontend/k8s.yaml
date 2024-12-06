@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: ecommerce-system-frontend-deployment-container
-          image: ngophuocloi/test-turbo-frontend:v4
+          image: ngophuocloi/test-turbo-frontend:v5
           ports:
             - containerPort: 3000
           envFrom:

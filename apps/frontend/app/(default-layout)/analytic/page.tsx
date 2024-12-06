@@ -18,8 +18,6 @@ import { OrderAnalytic } from "./components/order-analytic";
 import { RecentSales } from "./components/recent-sales";
 import { DateTime } from "luxon";
 
-export const NUMBER_OF_MONTHS = 6;
-
 const Page = async () => {
   const orders: OrderForShop[] = await getOrdersForShop();
   orders.sort(

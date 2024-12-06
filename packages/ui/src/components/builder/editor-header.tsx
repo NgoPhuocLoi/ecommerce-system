@@ -1,14 +1,17 @@
 import { useEditor } from "@craftjs/core";
 import { selectedPageAtom } from "@repo/common/atoms/page-atom";
 import { useAtom } from "jotai";
-import { Eye, EyeOff, LogOut, Redo2, Undo2 } from "lucide-react";
+import { ExternalLink, Eye, EyeOff, LogOut, Redo2, Undo2 } from "lucide-react";
 import lz from "lz-string";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ReactNode, useState } from "react";
 import { DEFAULT_LAYOUT } from "./editor-body";
 import { updatePageInTheme, updateTheme } from "@repo/common/actions/themes";
-import { updatePage } from "@repo/common/actions/online-shop";
+import {
+  updateDefaultLayout,
+  updatePage,
+} from "@repo/common/actions/online-shop";
 import PagesPopover from "./pages-popover";
 import { Button } from "../ui/button";
 
@@ -17,6 +20,7 @@ interface IEditorHeaderProps {
   isAdminBuilder?: boolean;
   actionsComponent?: ReactNode;
   typeOfLayout?: "defaultHeaderLayout" | "defaultFooterLayout";
+  domain?: string;
 }
 
 const EditorHeader = ({
@@ -24,6 +28,7 @@ const EditorHeader = ({
   isAdminBuilder,
   actionsComponent,
   typeOfLayout,
+  domain,
 }: IEditorHeaderProps) => {
   const { actions, query, enabled } = useEditor((state) => ({
     enabled: state.options.enabled,
@@ -42,9 +47,17 @@ const EditorHeader = ({
       if (!selectedPage && pageId !== DEFAULT_LAYOUT) return;
 
       if (pageId === DEFAULT_LAYOUT) {
-        await updateTheme(themeId, {
-          [typeOfLayout as string]: encoded,
-        });
+        if (isAdminBuilder) {
+          await updateTheme(themeId, {
+            [typeOfLayout as string]: encoded,
+          });
+        } else {
+          const res = await updateDefaultLayout({
+            [typeOfLayout as string]: encoded,
+          });
+          console;
+        }
+
         return;
       }
 
@@ -59,13 +72,11 @@ const EditorHeader = ({
           layout: encoded,
         });
       } else {
+        // alert("RUN HERE");
         const updatedRes = await updatePage(selectedPage!.id, {
           layout: encoded,
         });
       }
-      // if (updatedRes.statusCode === 200) {
-      //   setSelectedPage(updatedRes.metadata);
-      // }
     } catch (error) {
     } finally {
       setLoading(false);
@@ -87,7 +98,18 @@ const EditorHeader = ({
       {actionsComponent ? (
         actionsComponent
       ) : (
-        <div className="flex gap-4">
+        <div className="flex gap-4 items-center">
+          {!isAdminBuilder && domain && (
+            <>
+              <a
+                title="Xem trang web của bạn"
+                href={`http://${domain}.my-ecommerce.live`}
+                target="_blank"
+              >
+                <ExternalLink className="h-5" />
+              </a>
+            </>
+          )}
           <div className="flex items-center gap-1">
             <div
               onClick={() => {
@@ -101,12 +123,6 @@ const EditorHeader = ({
             >
               {enabled ? <Eye className="h-5" /> : <EyeOff className="h-5" />}
             </div>
-            {/* <div className="cursor-pointer rounded-md px-1 py-2 hover:bg-gray-100">
-              <Undo2 className="h-5" />
-            </div>
-            <div className="cursor-pointer rounded-md px-1 py-2 hover:bg-gray-100">
-              <Redo2 className="h-5 cursor-pointer" />
-            </div> */}
           </div>
           <Button disabled={loading} onClick={handleSave}>
             {" "}

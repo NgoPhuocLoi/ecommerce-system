@@ -86,7 +86,7 @@ export const ProductSetting = () => {
           <Command defaultValue={props.selectedProductId}>
             <CommandInput placeholder="Search framework..." />
             <CommandList defaultValue={props.selectedProductId}>
-              <CommandEmpty>No framework found.</CommandEmpty>
+              <CommandEmpty>Không tìm thấy sản phẩm nào</CommandEmpty>
               <CommandGroup defaultValue={props.selectedProductId}>
                 {foundProducts.map((foundProduct) => (
                   <CommandItem
@@ -203,7 +203,15 @@ export const Product = ({
             {formatCurrency(selectedProduct?.price ?? 500)}
           </p>
           <p className="text-xs bg-black text-white flex justify-center items-center px-1 py-[2px] rounded-md font-bold">
-            -10%
+            {!selectedProduct
+              ? "10"
+              : Math.ceil(
+                  ((selectedProduct?.compare_at_price -
+                    selectedProduct?.price) *
+                    100) /
+                    selectedProduct?.compare_at_price,
+                )}
+            %
           </p>
           <p className="line-through text-gray-400">
             {formatCurrency(selectedProduct?.compare_at_price ?? 500)}

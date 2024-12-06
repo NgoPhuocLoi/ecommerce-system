@@ -134,7 +134,7 @@ export const createPageInTheme = async (
     }
     const url = `${BACKEND_BASE_URL}/themes/${themeId}/pages`;
     const res = await authenticatedFetch(url, "POST", token, pageData);
-
+    console.log({ createPages: res });
     return await extractMetadataFromResponse(res, {});
   } catch (error) {
     console.log(

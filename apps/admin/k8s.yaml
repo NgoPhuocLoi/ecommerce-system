@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: ecommerce-system-admin-deployment-container
-          image: ngophuocloi/test-turbo-admin:v2
+          image: ngophuocloi/test-turbo-admin:v3
           ports:
             - containerPort: 3002
           envFrom:

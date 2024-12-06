@@ -20,6 +20,8 @@ interface IShopHeaderProps {
   defaultHeaderLayout?: string;
   defaultFooterLayout?: string;
   shouldDisplayLayoutEditor?: boolean;
+  isShopBuilder?: boolean;
+  domain?: string;
 }
 
 const PageBuilder = ({
@@ -30,6 +32,8 @@ const PageBuilder = ({
   defaultHeaderLayout,
   defaultFooterLayout,
   shouldDisplayLayoutEditor,
+  isShopBuilder,
+  domain,
 }: IShopHeaderProps) => {
   useHydrateAtoms([[pagesAtom, pages]]);
   useHydrateAtoms([[productsAtom, products]]);
@@ -40,6 +44,7 @@ const PageBuilder = ({
           <LayoutBuilder
             defaultFooterLayout={defaultFooterLayout}
             defaultHeaderLayout={defaultHeaderLayout}
+            isAdminBuilder={isAdminBuilder}
           />
         </>
       ) : (
@@ -47,6 +52,7 @@ const PageBuilder = ({
           <EditorHeader
             returnLink={returnLink}
             isAdminBuilder={isAdminBuilder}
+            domain={domain}
           />
           <EditorBody
             defaultHeaderLayout={defaultHeaderLayout}

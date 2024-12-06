@@ -1,20 +1,8 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { updatePagesPositionInTheme } from "@repo/common/actions/themes";
+import { pagesAtom, selectedPageAtom } from "@repo/common/atoms/page-atom";
+import { Page } from "@repo/common/interfaces/online-shop";
 import { Button } from "@repo/ui/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@repo/ui/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@repo/ui/components/ui/form";
 import { Input } from "@repo/ui/components/ui/input";
 import {
   Popover,
@@ -22,7 +10,6 @@ import {
   PopoverTrigger,
 } from "@repo/ui/components/ui/popover";
 import { Separator } from "@repo/ui/components/ui/separator";
-import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
 import { useAtom } from "jotai";
 import { ChevronDown, LayoutTemplate, Search, StickyNote } from "lucide-react";
@@ -31,10 +18,7 @@ import { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { pagesAtom, selectedPageAtom } from "@repo/common/atoms/page-atom";
-import { createPage } from "@repo/common/actions/online-shop";
-import { Page } from "@repo/common/interfaces/online-shop";
-import { updatePagesPositionInTheme } from "@repo/common/actions/themes";
+import NewPageDialog from "./new-page-dialog";
 
 const createPageFormSchema = z.object({
   name: z
@@ -90,20 +74,6 @@ const PagesPopover = ({ isAdminBuilder }: { isAdminBuilder?: boolean }) => {
       name: "",
     },
   });
-
-  const onSubmit = async (values: z.infer<typeof createPageFormSchema>) => {
-    const newPageName = values.name;
-    const isPageNameExist = pages.some((page) => page.name === newPageName);
-    if (isPageNameExist) {
-      return;
-    }
-    const res = await createPage(newPageName);
-    if (res.statusCode === 201) {
-      setPages([...pages, res.metadata]);
-      form.reset();
-      setOpenCreateNewPageForm(false);
-    }
-  };
 
   const onSelectPage = (page: Page | null) => {
     setSelectedPage(page);
@@ -251,48 +221,18 @@ const PagesPopover = ({ isAdminBuilder }: { isAdminBuilder?: boolean }) => {
           ))} */}
 
           <Separator />
-          <Dialog
-            open={openCreateNewPageForm}
-            onOpenChange={setOpenCreateNewPageForm}
-          >
-            <DialogTrigger asChild>
-              <Button size={"sm"}>Tạo trang mới</Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>Tạo trang mới</DialogTitle>
-                <DialogDescription>
-                  Tạo trang mới để bắt đầu thiết kế
-                </DialogDescription>
-              </DialogHeader>
-
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="flex flex-col space-y-8"
-                >
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Tên trang</FormLabel>
-                        <FormControl>
-                          <Input placeholder="shadcn" {...field} />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <Button className="ml-auto" type="submit">
-                    Submit
-                  </Button>
-                </form>
-              </Form>
-            </DialogContent>
-          </Dialog>
+          <NewPageDialog
+            isAdminBuilder={isAdminBuilder}
+            existingPages={pages}
+            onPageCreated={(pageCreated) => {
+              onSelectPage(pageCreated);
+              setPages([...pages, pageCreated]);
+              const urlToReplace = isAdminBuilder
+                ? `/admin-builder?themeId=${searchParams.get("themeId")}&pageId=${pageCreated.id}`
+                : `/shop-builder?pageId=${pageCreated.id}`;
+              router.replace(urlToReplace);
+            }}
+          />
         </div>
       </PopoverContent>
     </Popover>

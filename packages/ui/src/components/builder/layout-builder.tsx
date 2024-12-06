@@ -14,11 +14,13 @@ import * as editableComponents from "../editable/components";
 interface ILayoutBuilderProps {
   defaultHeaderLayout?: string;
   defaultFooterLayout?: string;
+  isAdminBuilder?: boolean;
 }
 
 const LayoutBuilder = ({
   defaultFooterLayout,
   defaultHeaderLayout,
+  isAdminBuilder,
 }: ILayoutBuilderProps) => {
   const [activePart, setActivePart] = useState<"header" | "footer">("header");
 
@@ -32,8 +34,8 @@ const LayoutBuilder = ({
         {activePart === "header" && (
           <>
             <EditorHeader
-              returnLink={"/admin/themes"}
-              isAdminBuilder={true}
+              returnLink={isAdminBuilder ? "/themes" : "/dashboard"}
+              isAdminBuilder={isAdminBuilder}
               typeOfLayout={"defaultHeaderLayout"}
             />
             <Toolbox />
@@ -53,7 +55,7 @@ const LayoutBuilder = ({
           }}
         >
           <RenderEditor
-            isAdminBuilder={true}
+            isAdminBuilder={isAdminBuilder}
             loading={false}
             jsonLayout={lz.decompressFromBase64(defaultHeaderLayout ?? "")}
           />
@@ -91,8 +93,8 @@ const LayoutBuilder = ({
         {activePart === "footer" && (
           <>
             <EditorHeader
-              returnLink={"/admin/themes"}
-              isAdminBuilder={true}
+              returnLink={isAdminBuilder ? "/themes" : "/dashboard"}
+              isAdminBuilder={isAdminBuilder}
               typeOfLayout={"defaultFooterLayout"}
             />
             <Toolbox />
@@ -109,7 +111,7 @@ const LayoutBuilder = ({
           }}
         >
           <RenderEditor
-            isAdminBuilder={true}
+            isAdminBuilder={isAdminBuilder}
             loading={false}
             jsonLayout={lz.decompressFromBase64(defaultFooterLayout ?? "")}
           />

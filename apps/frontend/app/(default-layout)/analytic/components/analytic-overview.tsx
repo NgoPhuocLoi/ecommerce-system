@@ -10,16 +10,8 @@ import {
 } from "@repo/ui/components/ui/chart";
 import { DateTime } from "luxon";
 import { useMemo } from "react";
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  LabelList,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-} from "recharts";
-import { NUMBER_OF_MONTHS } from "../page";
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts";
+const NUMBER_OF_MONTHS = 6;
 
 const chartConfig = {
   income: {
@@ -44,7 +36,7 @@ export function AnalyticOverview({ orders }: { orders: OrderForShop[] }) {
     const result = [];
 
     for (let i = 0; i < NUMBER_OF_MONTHS; i++) {
-      const month = (lastMonthNumber - i + 12) % 12;
+      const month = (lastMonthNumber - i + 12) % 12 || 12;
       const income = monthToIncomeMap.get(month) ?? 0;
       result.unshift({
         month,
@@ -52,7 +44,7 @@ export function AnalyticOverview({ orders }: { orders: OrderForShop[] }) {
         label: formatCurrency(income),
       });
     }
-
+    console.log({ result });
     return result;
   }, [orders]);
   return (
