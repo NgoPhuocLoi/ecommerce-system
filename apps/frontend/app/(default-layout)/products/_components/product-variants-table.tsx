@@ -13,6 +13,8 @@ import {
 } from "app/utils/variant-option";
 import { useEffect, useRef, useState } from "react";
 import { VariantOption } from "./product-variant-list";
+import { useAtom } from "jotai";
+import { createProductAtom } from "../atom/create-product-atom";
 
 interface IProductVariantsTableProps {
   variantOptions: VariantOption[];
@@ -23,6 +25,29 @@ const ProductVariantsTable = ({
 }: IProductVariantsTableProps) => {
   const [variants, setVariants] = useState<any[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [createProductData, setCreateProductData] = useAtom(createProductAtom);
+
+  useEffect(() => {
+    if (variants.length === 0) {
+      setCreateProductData((prev) => ({
+        ...prev,
+        shouldDisaleTotalQuantity: false,
+      }));
+      return;
+    }
+    // setCreateProductData((prev) => ({
+    //   ...prev,
+    //   totalQuantity: variants.reduce((acc, curr) => acc + curr.quantity, 0),
+    //   shouldDisaleTotalQuantity: variants.length > 0,
+    // }));
+  }, [variants]);
+
+  // useEffect(() => {
+  //   setCreateProductData((prev) => ({
+  //     ...prev,
+  //     shouldDisaleTotalQuantity: variantOptions.length > 0,
+  //   }));
+  // }, [variantOptions]);
 
   useEffect(() => {
     console.log("CHANGE");
@@ -44,7 +69,7 @@ const ProductVariantsTable = ({
       if (!secondOption) {
         variants.push({
           id: `${a.id}`,
-          price: 0,
+          price: createProductData.productPrice,
           quantity: 0,
           attributesInfo: [
             {
@@ -62,7 +87,7 @@ const ProductVariantsTable = ({
           if (!thirdOption) {
             variants.push({
               id: `${a.id}/${b.id}`,
-              price: 100,
+              price: createProductData.productPrice,
               quantity: 0,
               attributesInfo: [
                 {
@@ -131,6 +156,7 @@ const ProductVariantsTable = ({
 
   const onOuterCustomValueChange = (id: string, key: string, value: any) => {
     const v = Number(value) ?? 0;
+    console.log({ id, key, value });
     setVariants((prev) => {
       return prev.map((variant) => {
         if (variant.id.includes(id)) {
@@ -203,7 +229,7 @@ const ProductVariantsTable = ({
                     <p className="text-sm">{outerValue.name}</p>
                     {variantOptions.length > 1 && (
                       <p className="text-[13px] text-gray-400">
-                        {getNumberOfVairants(variantOptions)} variants
+                        {getNumberOfVairants(variantOptions)} biến thể
                       </p>
                     )}
                   </div>
@@ -248,10 +274,44 @@ const ProductVariantsTable = ({
               <div>
                 <Input
                   id={`quantity-${outerValue.id}`}
-                  value={variants
-                    .filter((v) => v.id.includes(outerValue.id))
-                    .reduce((acc, curr) => acc + curr.quantity, 0)}
-                  disabled
+                  value={
+                    variants.find((v) => v.id === `${outerValue.id}`)?.quantity
+                  }
+                  onChange={(e) => {
+                    onOuterCustomValueChange(
+                      `${outerValue.id}`,
+                      "quantity",
+                      e.target.value,
+                    );
+                  }}
+                  disabled={variantOptions.length > 1}
+                  onKeyDown={(e) => {
+                    if (e.key === "Backspace" || e.key === "Delete") {
+                      onOuterCustomValueChange(
+                        `${outerValue.id}`,
+                        "quantity",
+                        0,
+                      );
+                    }
+                    if (
+                      ![
+                        "0",
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "6",
+                        "7",
+                        "8",
+                        "9",
+                      ].includes(e.key)
+                    ) {
+                      e.preventDefault();
+                      console.log("INVALID KEY");
+                      return;
+                    }
+                  }}
                 />
               </div>
             </div>

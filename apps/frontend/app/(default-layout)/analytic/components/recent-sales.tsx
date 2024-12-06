@@ -1,3 +1,4 @@
+import { CustomerForShop } from "@repo/common/interfaces/customer";
 import { formatCurrency } from "@repo/common/utils/currency-format";
 import {
   Avatar,
@@ -5,23 +6,31 @@ import {
   AvatarImage,
 } from "@repo/ui/components/ui/avatar";
 
-export function RecentSales() {
+export function RecentSales({ customers }: { customers: CustomerForShop[] }) {
   return (
     <div className="space-y-8">
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/01.png" alt="Avatar" />
-          <AvatarFallback>OM</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Olivia Martin</p>
-          <p className="text-sm text-muted-foreground">
-            olivia.martin@email.com
-          </p>
-        </div>
-        <div className="ml-auto font-medium">{formatCurrency(1890000)}</div>
-      </div>
-      <div className="flex items-center">
+      {customers
+        .filter((c) => c.totalSpent > 0)
+        .sort((a, b) => b.totalSpent - a.totalSpent)
+        .map((customer) => (
+          <div key={customer.id} className="flex items-center">
+            <Avatar className="h-9 w-9">
+              <AvatarImage src="/avatars/01.png" alt="Avatar" />
+              <AvatarFallback>{customer.first_name}</AvatarFallback>
+            </Avatar>
+            <div className="ml-4 space-y-1">
+              <p className="text-sm font-medium leading-none">
+                {customer.last_name} {customer.first_name}
+              </p>
+              <p className="text-sm text-muted-foreground">{customer.email}</p>
+            </div>
+            <div className="ml-auto font-medium">
+              {formatCurrency(customer.totalSpent)}
+            </div>
+          </div>
+        ))}
+      {}
+      {/* <div className="flex items-center">
         <Avatar className="flex h-9 w-9 items-center justify-center space-y-0 border">
           <AvatarImage src="/avatars/02.png" alt="Avatar" />
           <AvatarFallback>JL</AvatarFallback>
@@ -31,7 +40,7 @@ export function RecentSales() {
           <p className="text-sm text-muted-foreground">jackson.lee@email.com</p>
         </div>
         <div className="ml-auto font-medium">{formatCurrency(690000)}</div>
-      </div>
+      </div> */}
       {/* <div className="flex items-center">
         <Avatar className="h-9 w-9">
           <AvatarImage src="/avatars/03.png" alt="Avatar" />

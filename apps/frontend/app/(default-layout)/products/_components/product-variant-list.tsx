@@ -429,6 +429,13 @@ const ProductVariantList = ({
                       size="sm"
                       variant="outline"
                       className="border-red-500 text-red-500 hover:text-red-500"
+                      onClick={() => {
+                        setVariantOptions((prevOptions) => {
+                          return prevOptions.filter(
+                            (op) => op.id !== option.id,
+                          );
+                        });
+                      }}
                     >
                       Xóa
                     </Button>

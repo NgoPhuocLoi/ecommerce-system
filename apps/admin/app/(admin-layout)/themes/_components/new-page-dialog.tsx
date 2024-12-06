@@ -1,6 +1,8 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { getPages } from "@repo/common/actions/online-shop";
 import { createPageInTheme } from "@repo/common/actions/themes";
+import { Page } from "@repo/common/interfaces/online-shop";
 import { Button } from "@repo/ui/components/ui/button";
 import { Checkbox } from "@repo/ui/components/ui/checkbox";
 import {
@@ -30,11 +32,15 @@ const createPageFormSchema = z.object({
     .string()
     .min(2, "Tên trang phải trên 2 ký tự")
     .max(50, "Tên trang không được quá 50 ký tự"),
-  link: z.string(),
+  link: z.string().startsWith("/", "Link phải bắt đầu bằng dấu /"),
   showInNavigation: z.boolean(),
 });
 
-const NewPageDialog = () => {
+interface INewPageDialogProps {
+  existingPages: Page[];
+}
+
+const NewPageDialog = ({ existingPages }: INewPageDialogProps) => {
   const themeId = useParams().themeId as string;
   const [openCreateNewPageForm, setOpenCreateNewPageForm] = useState(false);
 
@@ -48,15 +54,15 @@ const NewPageDialog = () => {
   });
 
   const onSubmitForm = async (values: z.infer<typeof createPageFormSchema>) => {
-    console.log({ values });
-    const res = await createPageInTheme(themeId, {
-      name: values.name,
-      link: values.link,
-      showInNavigation: values.showInNavigation,
-    });
-    console.log({ res });
-    form.reset();
-    setOpenCreateNewPageForm(false);
+    console.log({ values, existingPages });
+    // const res = await createPageInTheme(themeId, {
+    //   name: values.name,
+    //   link: values.link,
+    //   showInNavigation: values.showInNavigation,
+    // });
+    // console.log({ res });
+    // form.reset();
+    // setOpenCreateNewPageForm(false);
   };
   return (
     <Dialog

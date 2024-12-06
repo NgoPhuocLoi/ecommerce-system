@@ -9,7 +9,7 @@ import clsx from "clsx";
 import { Label } from "@repo/ui/components/ui/label";
 
 const PLACEHOLDER_IMAGE_URL =
-  "https://bc-stencil-production.s3.amazonaws.com/m/55cbfb30-4c33-013d-7a5c-52329bccbb28/large_thumb_screenshot.png";
+  "https://res.cloudinary.com/dudsfr6aq/image/upload/v1733405054/Screenshot_2024-12-05_at_20.22.48_m5tb85.png";
 
 interface IThingToSellQuestionProps {
   value: string;
@@ -79,6 +79,7 @@ const ThingToSellQuestion = ({
                     alt="Theme"
                     width={350}
                     height={450}
+                    className="rounded-md"
                   />
                 </div>
                 <div className="mt-4 flex items-center justify-between">

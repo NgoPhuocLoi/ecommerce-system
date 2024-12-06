@@ -7,5 +7,5 @@ export default async function Home() {
     return redirect("/sign-in");
   }
 
-  return redirect("/dashboard");
+  return redirect("/themes");
 }

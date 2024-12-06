@@ -6,7 +6,9 @@ import {
   CardTitle,
 } from "@repo/ui/components/ui/card";
 import TextField from "@repo/ui/components/ui/text-field";
+import { useAtom } from "jotai";
 import React, { useMemo } from "react";
+import { createProductAtom } from "../atom/create-product-atom";
 
 interface IProductPricingProps {
   initialPricing?: {
@@ -22,6 +24,7 @@ const ProductPricing = ({ initialPricing }: IProductPricingProps) => {
     compareAtPrice?: number;
     cost?: number;
   }>(initialPricing ?? {});
+  const [createProductData, setCreateProductData] = useAtom(createProductAtom);
 
   const profit = useMemo(() => {
     if (
@@ -49,6 +52,10 @@ const ProductPricing = ({ initialPricing }: IProductPricingProps) => {
               value={productPricing.price}
               onChange={(value) => {
                 setProductPricing({ ...productPricing, price: Number(value) });
+                setCreateProductData((prev) => ({
+                  ...prev,
+                  productPrice: Number(value),
+                }));
               }}
             />
             <TextField

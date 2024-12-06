@@ -19,7 +19,7 @@ const Page = async ({ params }: { params: { productId: string } }) => {
 
   return (
     <>
-      <div className="pt-7 container h-full min-h-[calc(100vh-56px)]">
+      <div className="py-7 container h-full min-h-[calc(100vh-56px)]">
         <Breadcrumb className="pb-6">
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -39,7 +39,7 @@ const Page = async ({ params }: { params: { productId: string } }) => {
         </div>
       </div>
 
-      <RecommendProducts />
+      {/* <RecommendProducts /> */}
     </>
   );
 };

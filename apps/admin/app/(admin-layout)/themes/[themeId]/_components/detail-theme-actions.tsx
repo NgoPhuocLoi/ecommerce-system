@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useFormStatus } from "react-dom";
 import DeleteAlertDialog from "../../../_components/common/delete-alert-dialog";
+import { toast } from "sonner";
 
 const DetailThemeAction = () => {
   const themeId = useParams().themeId as string;
@@ -12,8 +13,12 @@ const DetailThemeAction = () => {
   const formStatus = useFormStatus();
 
   const handleDeleteTheme = async () => {
-    await deleteTheme(themeId);
-    router.push("/admin/themes");
+    const deletedTheme = await deleteTheme(themeId);
+    if (!deletedTheme.id) {
+      toast.error("Chủ đề đang được sử dụng, không thể xoá");
+      return;
+    }
+    router.push("/themes");
   };
 
   return (

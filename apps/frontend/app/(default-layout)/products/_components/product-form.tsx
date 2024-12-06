@@ -55,6 +55,9 @@ const ProductForm = ({ badgeLabel, title, product }: IProductFormProps) => {
       variants,
     };
 
+    console.log({ dataToSubmit });
+    console.log({ variants: dataToSubmit.variants });
+
     const res = await createProduct(dataToSubmit);
     revalidatePath("/products");
     redirect("/products/");

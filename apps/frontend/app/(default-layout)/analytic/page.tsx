@@ -1,30 +1,43 @@
+import {
+  getCustomersForShop,
+  getOrdersForShop,
+} from "@repo/common/actions/shop-managenent";
+import { CustomerForShop } from "@repo/common/interfaces/customer";
+import { OrderForShop } from "@repo/common/interfaces/order";
 import { formatCurrency } from "@repo/common/utils/currency-format";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@repo/ui/components/ui/card";
 import { Package } from "lucide-react";
 import { AnalyticOverview } from "./components/analytic-overview";
+import { CustomerRegistrationAnalytic } from "./components/customer-registration-analytic";
 import { OrderAnalytic } from "./components/order-analytic";
 import { RecentSales } from "./components/recent-sales";
-import { CustomerRegistrationAnalytic } from "./components/customer-registration-analytic";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@repo/ui/components/ui/select";
-import { Label } from "@repo/ui/components/ui/label";
-const Page = () => {
+import { DateTime } from "luxon";
+
+export const NUMBER_OF_MONTHS = 6;
+
+const Page = async () => {
+  const orders: OrderForShop[] = await getOrdersForShop();
+  orders.sort(
+    (a, b) =>
+      DateTime.fromISO(a.created_at).month -
+      DateTime.fromISO(b.created_at).month,
+  );
+  const customers: CustomerForShop[] = await getCustomersForShop();
+  customers.sort(
+    (a, b) =>
+      DateTime.fromISO(a.created_at).month -
+      DateTime.fromISO(b.created_at).month,
+  );
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
       <div className="w-fit flex gap-2 flex-col">
         {/* <Label className="w-fit flex-shrink-0">Thời gian thống kê</Label> */}
-        <Select defaultValue="0">
+        {/* <Select defaultValue="0">
           <SelectTrigger>
             <SelectValue placeholder="Select" />
           </SelectTrigger>
@@ -34,7 +47,7 @@ const Page = () => {
             <SelectItem value="2">6 tháng gần đây</SelectItem>
             <SelectItem value="3">1 năm gần đây</SelectItem>
           </SelectContent>
-        </Select>
+        </Select> */}
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
@@ -57,7 +70,9 @@ const Page = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {formatCurrency(3523140000)}
+              {formatCurrency(
+                orders.reduce((acc, order) => acc + order.final_price, 0),
+              )}
             </div>
             {/* <p className="text-xs text-muted-foreground">
               +20.1% from last month
@@ -83,7 +98,7 @@ const Page = () => {
             </svg>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">3</div>
+            <div className="text-2xl font-bold">{customers.length}</div>
             {/* <p className="text-xs text-muted-foreground">
               +180.1% from last month
             </p> */}
@@ -109,7 +124,9 @@ const Page = () => {
             </svg>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">134</div>
+            <div className="text-2xl font-bold">
+              {orders.reduce((acc, order) => acc + order.total_items, 0)}
+            </div>
             {/* <p className="text-xs text-muted-foreground">
               +19% from last month
             </p> */}
@@ -118,12 +135,12 @@ const Page = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Tổng đơn hàng đã nhận
+              Tổng đơn hàng đã nhận{" "}
             </CardTitle>
             <Package size={16} className="text-gray-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">40</div>
+            <div className="text-2xl font-bold">{orders.length}</div>
             {/* <p className="text-xs text-muted-foreground">
               +201 since last hour
             </p> */}
@@ -136,7 +153,7 @@ const Page = () => {
             <CardTitle>Tổng quan doanh thu</CardTitle>
           </CardHeader>
           <CardContent className="pl-2">
-            <AnalyticOverview />
+            <AnalyticOverview orders={orders} />
           </CardContent>
         </Card>
         <Card className="col-span-3">
@@ -145,14 +162,14 @@ const Page = () => {
             {/* <CardDescription>You made 265 sales this month.</CardDescription> */}
           </CardHeader>
           <CardContent>
-            <RecentSales />
+            <RecentSales customers={customers} />
           </CardContent>
         </Card>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <OrderAnalytic />
-        <CustomerRegistrationAnalytic />
+        <OrderAnalytic orders={orders} />
+        <CustomerRegistrationAnalytic customers={customers} />
       </div>
     </div>
   );

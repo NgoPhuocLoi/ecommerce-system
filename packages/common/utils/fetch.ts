@@ -27,14 +27,17 @@ export const tenantSpecificFetch = async ({
   method,
   body,
   tag,
+  noStoreCache,
 }: {
   url: string;
   method: string;
   body?: any;
   tag?: string;
+  noStoreCache?: boolean;
 }) => {
   const token = await (await auth()).getToken();
   const selectedShopId = cookies().get("selectedShopId");
+
   console.log({ token, selectedShopId });
   if (!token || !selectedShopId) {
     console.log("HEREEEE");
@@ -55,6 +58,10 @@ export const tenantSpecificFetch = async ({
     option.next = {
       tags: [tag],
     };
+  }
+
+  if (noStoreCache) {
+    option.cache = "no-store";
   }
 
   return fetch(url, option);

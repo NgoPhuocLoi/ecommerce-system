@@ -23,6 +23,15 @@ export const getShops = async (accessToken: string) => {
   }
 };
 
+export const getShopByDomain = async (domain: string) => {
+  try {
+    const res = await fetch(`${SHOP_API}/domain/${domain}`);
+    return await extractMetadataFromResponse(res);
+  } catch (error) {
+    console.log("[Shop action]: Error when getting shop by domain");
+  }
+};
+
 export const createShop = async (data: {
   name: string;
   domain: string;

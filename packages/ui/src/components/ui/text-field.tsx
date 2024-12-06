@@ -14,6 +14,7 @@ interface ITextFieldProps {
   name?: string;
   defaultValue?: string | number;
   disabled?: boolean;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const TextField = ({
@@ -27,6 +28,7 @@ const TextField = ({
   name,
   defaultValue,
   disabled,
+  onKeyDown,
 }: ITextFieldProps) => {
   return (
     <div className="w-full">
@@ -48,6 +50,7 @@ const TextField = ({
             "border-red-500": error,
           })}
           disabled={disabled}
+          onKeyDown={onKeyDown}
         />
       </div>
       <span className="text-xs text-red-500">{error}</span>

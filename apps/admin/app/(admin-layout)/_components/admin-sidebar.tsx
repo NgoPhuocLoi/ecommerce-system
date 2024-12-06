@@ -6,12 +6,12 @@ import { usePathname } from "next/navigation";
 import React from "react";
 
 const ADMIN_LINKS = [
-  {
-    id: 1,
-    title: "Trang chủ",
-    icon: Home,
-    link: "/dashboard",
-  },
+  // {
+  //   id: 1,
+  //   title: "Trang chủ",
+  //   icon: Home,
+  //   link: "/dashboard",
+  // },
   {
     id: 2,
     title: "Chủ đề",
@@ -25,12 +25,12 @@ const ADMIN_LINKS = [
     icon: Users,
     link: "/customers",
   },
-  {
-    id: 4,
-    title: "Thống kê",
-    icon: LineChart,
-    link: "/analytics",
-  },
+  // {
+  //   id: 4,
+  //   title: "Thống kê",
+  //   icon: LineChart,
+  //   link: "/analytics",
+  // },
 ];
 
 const AdminSidebar = () => {

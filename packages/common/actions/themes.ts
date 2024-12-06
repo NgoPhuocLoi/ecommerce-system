@@ -66,7 +66,7 @@ export const createTheme = async ({
     console.log(`[Themes action]: Error when creating theme`);
     return null;
   } finally {
-    revalidatePath("/vi/admin/themes");
+    revalidatePath("/themes");
   }
 };
 
@@ -95,7 +95,7 @@ export const updateTheme = async (
     );
     return null;
   } finally {
-    revalidatePath("/vi/admin/themes");
+    revalidatePath("/themes");
   }
 };
 
@@ -107,7 +107,7 @@ export const deleteTheme = async (themeId: string) => {
     }
     const url = `${BACKEND_BASE_URL}/themes/${themeId}`;
     const res = await authenticatedFetch(url, "DELETE", token);
-
+    console.log({ res });
     return await extractMetadataFromResponse(res, {});
   } catch (error) {
     console.log(
@@ -115,7 +115,7 @@ export const deleteTheme = async (themeId: string) => {
     );
     return null;
   } finally {
-    revalidatePath("/vi/admin/themes");
+    revalidatePath("/themes");
   }
 };
 
@@ -142,7 +142,7 @@ export const createPageInTheme = async (
     );
     return null;
   } finally {
-    revalidatePath(`/vi/admin/themes/${themeId}`);
+    revalidatePath(`/themes/${themeId}`);
   }
 };
 
@@ -171,7 +171,7 @@ export const updatePageInTheme = async (
     );
     return null;
   } finally {
-    revalidatePath(`/vi/admin/themes/${themeId}`);
+    revalidatePath(`/themes/${themeId}`);
   }
 };
 
@@ -233,6 +233,6 @@ export const deletePageInTheme = async (themeId: string, pageId: string) => {
     );
     return null;
   } finally {
-    revalidatePath(`/vi/admin/themes/${themeId}`);
+    revalidatePath(`/themes/${themeId}`);
   }
 };

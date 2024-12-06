@@ -1,5 +1,6 @@
 "use client";
 
+import { OrderForShop } from "@repo/common/interfaces/order";
 import { formatCurrency } from "@repo/common/utils/currency-format";
 import {
   ChartConfig,
@@ -7,6 +8,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@repo/ui/components/ui/chart";
+import { DateTime } from "luxon";
+import { useMemo } from "react";
 import {
   Bar,
   BarChart,
@@ -16,34 +19,47 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { NUMBER_OF_MONTHS } from "../page";
 
-const chartData = [
-  { month: "T6", desktop: 1869873, label: formatCurrency(1869873) },
-  { month: "T7", desktop: 1861231, label: formatCurrency(1861231) },
-  { month: "T8", desktop: 200000, label: formatCurrency(200000) },
-  { month: "T9", desktop: 1300000, label: formatCurrency(1300000) },
-  { month: "T10", desktop: 650000, label: formatCurrency(650000) },
-  { month: "T11", desktop: 1000000, label: formatCurrency(1000000) },
-  // { month: "January", desktop: 186, label: formatCurrency(186) },
-  // { month: "February", desktop: 305, label: formatCurrency(186) },
-  // { month: "March", desktop: 237, label: formatCurrency(186) },
-  // { month: "April", desktop: 73, label: formatCurrency(186) },
-  // { month: "May", desktop: 209, label: formatCurrency(186) },
-  // { month: "June", desktop: 214, label: formatCurrency(186) },
-];
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  income: {
+    label: "Doanh thu: ",
     color: "#000",
   },
 } satisfies ChartConfig;
 
-export function AnalyticOverview() {
+export function AnalyticOverview({ orders }: { orders: OrderForShop[] }) {
+  const data = useMemo(() => {
+    const lastMonthNumber =
+      orders.length == 0
+        ? DateTime.now().month
+        : DateTime.fromISO(orders[orders.length - 1]?.created_at ?? "").month;
+    const monthToIncomeMap = new Map<number, number>();
+    orders.forEach((order) => {
+      const month = DateTime.fromISO(order.created_at).month;
+      const income = monthToIncomeMap.get(month) ?? 0;
+      monthToIncomeMap.set(month, income + order.final_price);
+    });
+
+    const result = [];
+
+    for (let i = 0; i < NUMBER_OF_MONTHS; i++) {
+      const month = (lastMonthNumber - i + 12) % 12;
+      const income = monthToIncomeMap.get(month) ?? 0;
+      result.unshift({
+        month,
+        income,
+        label: formatCurrency(income),
+      });
+    }
+
+    return result;
+  }, [orders]);
   return (
     <ChartContainer config={chartConfig}>
       <BarChart
         accessibilityLayer
-        data={chartData}
+        data={data}
         margin={{
           top: 20,
         }}
@@ -54,13 +70,13 @@ export function AnalyticOverview() {
           tickLine={false}
           tickMargin={10}
           axisLine={false}
-          tickFormatter={(value) => value.slice(0, 3)}
+          tickFormatter={(value) => "Tháng " + value}
         />
         <ChartTooltip
           cursor={false}
           content={<ChartTooltipContent hideLabel />}
         />
-        <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8}>
+        <Bar dataKey="income" fill="var(--color-desktop)" radius={8}>
           <LabelList
             position="top"
             offset={12}

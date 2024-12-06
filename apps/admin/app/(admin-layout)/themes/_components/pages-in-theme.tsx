@@ -8,12 +8,39 @@ interface IPagesInThemeProps {
   pages: Page[];
 }
 
+const CREATED_BY_DEFAULT_PAGES = [
+  {
+    id: 1,
+    name: "Trang chủ",
+    link: "/",
+    showInNavigation: true,
+  },
+  {
+    id: 2,
+    name: "Sản phẩm",
+    link: "/products",
+    showInNavigation: true,
+  },
+  {
+    id: 3,
+    name: "Giỏ hàng",
+    link: "/cart",
+    showInNavigation: true,
+  },
+  {
+    id: 4,
+    name: "Thanh toán",
+    link: "/checkout",
+    showInNavigation: false,
+  },
+];
+
 const PagesInTheme = ({ pages }: IPagesInThemeProps) => {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-baseline justify-between">
         <Label className="mt-auto">Trang mặc định</Label>
-        <NewPageDialog />
+        <NewPageDialog existingPages={pages} />
       </div>
       <div>
         <div className="grid grid-cols-9 rounded-tl-md rounded-tr-md border bg-gray-100">

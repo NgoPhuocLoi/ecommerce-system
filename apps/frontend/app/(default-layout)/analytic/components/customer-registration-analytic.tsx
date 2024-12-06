@@ -1,5 +1,6 @@
 "use client";
 
+import { CustomerForShop } from "@repo/common/interfaces/customer";
 import {
   Card,
   CardHeader,
@@ -15,7 +16,10 @@ import {
   ChartTooltipContent,
 } from "@repo/ui/components/ui/chart";
 import { TrendingUp } from "lucide-react";
+import { DateTime } from "luxon";
+import { useMemo } from "react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { NUMBER_OF_MONTHS } from "../page";
 
 const chartData = [
   { month: "T6", desktop: 0 },
@@ -33,18 +37,50 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function CustomerRegistrationAnalytic() {
+export function CustomerRegistrationAnalytic({
+  customers,
+}: {
+  customers: CustomerForShop[];
+}) {
+  const data = useMemo(() => {
+    const endMonth =
+      customers.length == 0
+        ? DateTime.now().month
+        : DateTime.fromISO(customers[customers.length - 1]?.created_at ?? "")
+            .month;
+    const monthToNumberOfOrdersMap = new Map<number, number>();
+    customers.forEach((customer) => {
+      const month = DateTime.fromISO(customer.created_at).month;
+      const numberOfOrders = monthToNumberOfOrdersMap.get(month) ?? 0;
+      monthToNumberOfOrdersMap.set(month, numberOfOrders + 1);
+    });
+
+    console.log({ monthToNumberOfOrdersMap });
+
+    const result = [];
+
+    for (let i = 0; i < NUMBER_OF_MONTHS; i++) {
+      const month = (endMonth - i + 12) % 12;
+      console.log({ month });
+      const numberOfOrders = monthToNumberOfOrdersMap.get(month) ?? 0;
+      result.unshift({
+        month,
+        desktop: numberOfOrders,
+      });
+    }
+    console.log({ result });
+    return result;
+  }, [customers]);
   return (
     <Card>
       <CardHeader>
         <CardTitle>Tăng trưởng khách hàng</CardTitle>
-        <CardDescription>T6 - T11 2024</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
           <LineChart
             accessibilityLayer
-            data={chartData}
+            data={data}
             margin={{
               left: 12,
               right: 12,
@@ -56,7 +92,7 @@ export function CustomerRegistrationAnalytic() {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => "T" + value}
             />
             <ChartTooltip
               cursor={false}

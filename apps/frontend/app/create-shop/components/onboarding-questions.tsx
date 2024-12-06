@@ -1,5 +1,5 @@
 "use client";
-import { createShop } from "@repo/common/actions/shops";
+import { createShop, getShopByDomain } from "@repo/common/actions/shops";
 import { Category } from "@repo/common/interfaces/category";
 import { Button } from "@repo/ui/components/ui/button";
 import {
@@ -149,19 +149,20 @@ const OnboardingQuestions = ({
       ...addressInformation,
     };
     // console.log({ data });
+    const foundShop = await getShopByDomain(values.domain);
+
+    if (foundShop) {
+      form.setError("domain", {
+        type: "manual",
+        message: "Domain đã tồn tại",
+      });
+      return;
+    }
     setLoading(true);
     const res = await createShop(data);
     setLoading(false);
     router.push(`/dashboard`);
     console.log({ res });
-    // checkDomain().then(() => {
-    //   if (domainValue === "repo.com") {
-    //     form.setError("domain", {
-    //       type: "manual",
-    //       message: "Domain đã tồn tại",
-    //     });
-    //   }
-    // });
   }
 
   return (

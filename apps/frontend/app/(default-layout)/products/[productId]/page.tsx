@@ -12,7 +12,7 @@ interface IProductDetailPage {
 const Page = async ({ params }: IProductDetailPage) => {
   const product: Product = (await getProductById(params.productId)).metadata;
   if (!product) {
-    return redirect("/auth/login");
+    return redirect("/sign-in");
   }
 
   return (

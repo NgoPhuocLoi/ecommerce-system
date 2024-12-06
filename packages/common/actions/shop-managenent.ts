@@ -13,6 +13,7 @@ export const getCustomersForShop = async (): Promise<CustomerForShop[]> => {
   const res = await tenantSpecificFetch({
     url: `${SHOP_MANAGEMENT_API}/customers`,
     method: "GET",
+    noStoreCache: true,
   });
 
   return extractMetadataFromResponse(res, []);
@@ -22,6 +23,7 @@ export const getOrdersForShop = async (): Promise<OrderForShop[]> => {
   const res = await tenantSpecificFetch({
     url: `${SHOP_MANAGEMENT_API}/orders`,
     method: "GET",
+    noStoreCache: true,
   });
 
   return extractMetadataFromResponse(res, []);

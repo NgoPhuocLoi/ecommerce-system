@@ -43,7 +43,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link
-              href="/dashboard"
+              href="/themes"
               className="flex items-center gap-2 font-semibold"
             >
               <Image src={logoPng} alt="Logo" width={40} height={40} />
@@ -121,7 +121,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
-            <form>
+            {/* <form>
               <div className="relative">
                 <Search className="text-muted-foreground absolute left-2.5 top-2.5 h-4 w-4" />
                 <Input
@@ -130,7 +130,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
                   className="bg-background w-full appearance-none pl-8 shadow-none md:w-2/3 lg:w-1/3"
                 />
               </div>
-            </form>
+            </form> */}
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

@@ -13,6 +13,7 @@ import {
   Product,
   Spacer,
   Text,
+  Button,
 } from "../editable/components";
 
 const ELEMEMENTS = [
@@ -75,7 +76,7 @@ const ELEMEMENTS = [
     id: 9,
     label: "Button",
     icon: icons.button,
-    component: Layout,
+    component: Button,
   },
   // {
   //   id: 10,

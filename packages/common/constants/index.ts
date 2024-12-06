@@ -11,5 +11,6 @@ export const ADDRESS_API = `${BACKEND_BASE_URL}/addresses`;
 export const CUSTOMER_API = `${BACKEND_BASE_URL}/customers`;
 export const SHIPPING_API = `${BACKEND_BASE_URL}/shipping`;
 export const SHOP_MANAGEMENT_API = `${BACKEND_BASE_URL}/shop-management`;
+export const ADMIN_MANAGEMENT_API = `${BACKEND_BASE_URL}/admin`;
 
 export const DEFAULT_LAYOUT = "defaultLayout";
