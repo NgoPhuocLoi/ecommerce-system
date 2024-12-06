@@ -10,3 +10,4 @@ export * from "./placeholder-container";
 export * from "./navbar";
 export * from "./spacer";
 export * from "./button";
+export * from "./divider";

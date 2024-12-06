@@ -15,6 +15,7 @@ import {
   Text,
   Button,
 } from "../editable/components";
+import { Divider } from "../editable/components/divider";
 
 const ELEMEMENTS = [
   {
@@ -94,7 +95,7 @@ const ELEMEMENTS = [
     id: 12,
     label: "Divider",
     icon: icons.divider,
-    component: Layout,
+    component: Divider,
   },
   {
     id: 13,

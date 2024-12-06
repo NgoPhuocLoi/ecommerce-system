@@ -16,6 +16,7 @@ import {
 import { DateTime } from "luxon";
 import { useMemo } from "react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { getEndMonth } from "./customer-registration-analytic";
 
 const NUMBER_OF_MONTHS = 6;
 
@@ -28,10 +29,7 @@ const chartConfig = {
 
 export function OrderAnalytic({ orders }: { orders: OrderForShop[] }) {
   const data = useMemo(() => {
-    const endMonth =
-      orders.length == 0
-        ? DateTime.now().month
-        : DateTime.fromISO(orders[orders.length - 1]?.created_at ?? "").month;
+    const endMonth = getEndMonth(orders);
     const monthToNumberOfOrdersMap = new Map<number, number>();
     orders.forEach((order) => {
       const month = DateTime.fromISO(order.created_at).month;

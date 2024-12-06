@@ -20,10 +20,28 @@ const NUMBER_OF_MONTHS = 6;
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
+    label: "Khách hàng: ",
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
+
+export const getEndMonth = (
+  objList: {
+    created_at: string;
+  }[],
+) => {
+  if (objList.length == 0) {
+    return DateTime.now().month;
+  }
+  let endMonth = DateTime.fromISO(
+    objList[objList.length - 1]?.created_at ?? "",
+  ).month;
+
+  if (endMonth < DateTime.now().month) {
+    endMonth = DateTime.now().month;
+  }
+  return endMonth;
+};
 
 export function CustomerRegistrationAnalytic({
   customers,
@@ -31,11 +49,7 @@ export function CustomerRegistrationAnalytic({
   customers: CustomerForShop[];
 }) {
   const data = useMemo(() => {
-    const endMonth =
-      customers.length == 0
-        ? DateTime.now().month
-        : DateTime.fromISO(customers[customers.length - 1]?.created_at ?? "")
-            .month;
+    const endMonth = getEndMonth(customers);
     const monthToNumberOfOrdersMap = new Map<number, number>();
     customers.forEach((customer) => {
       const month = DateTime.fromISO(customer.created_at).month;

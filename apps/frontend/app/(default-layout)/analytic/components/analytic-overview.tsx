@@ -11,6 +11,7 @@ import {
 import { DateTime } from "luxon";
 import { useMemo } from "react";
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts";
+import { getEndMonth } from "./customer-registration-analytic";
 const NUMBER_OF_MONTHS = 6;
 
 const chartConfig = {
@@ -22,10 +23,7 @@ const chartConfig = {
 
 export function AnalyticOverview({ orders }: { orders: OrderForShop[] }) {
   const data = useMemo(() => {
-    const lastMonthNumber =
-      orders.length == 0
-        ? DateTime.now().month
-        : DateTime.fromISO(orders[orders.length - 1]?.created_at ?? "").month;
+    const lastMonthNumber = getEndMonth(orders);
     const monthToIncomeMap = new Map<number, number>();
     orders.forEach((order) => {
       const month = DateTime.fromISO(order.created_at).month;

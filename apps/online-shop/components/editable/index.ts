@@ -8,5 +8,6 @@ export { Column } from "@repo/ui/components/editable/components/column";
 export { Spacer } from "@repo/ui/components/editable/components/spacer";
 export { HeroBanner } from "@repo/ui/components/editable/components/hero-banner";
 export { Button } from "@repo/ui/components/editable/components/button";
+export { Divider } from "@repo/ui/components/editable/components/divider";
 export { Link } from "./link";
 export { Navbar } from "./navbar";
